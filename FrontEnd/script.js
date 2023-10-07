@@ -6,7 +6,9 @@ const works = await worksApi.json();
 
 // Fonction pour afficher les œuvres dans la galerie
 const displayWorks = async (worksToDisplay) => {
-  galleryElement.innerHTML = ""; // Effacer le contenu actuel de la galerie
+  
+  // Effacer le contenu actuel de la galerie
+  galleryElement.innerHTML = "";
 
   for (let i = 0; i < worksToDisplay.length; i++) {
     const picturesElement = document.createElement("figure");
@@ -60,6 +62,13 @@ for (let i = 0; i < categories.length; i++) {
   });
 }
 
+// Code pour récupérer les travaux du BackEnd
+const loginApi = await fetch("http://localhost:5678/api/users/login");
+const login = await loginApi.json();
+const mailChamp = document.getElementById("email")
+const passwordChamp = document.getElementById("password")
+const submitBtn = document.getElementById("submit")
 
-
-
+submitBtn.addEventListener("click", () => {
+  console.log("salut zinzin");
+});
