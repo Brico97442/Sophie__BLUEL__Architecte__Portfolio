@@ -62,13 +62,4 @@ for (let i = 0; i < categories.length; i++) {
   });
 }
 
-// Code pour récupérer les travaux du BackEnd
-const loginApi = await fetch("http://localhost:5678/api/users/login");
-const login = await loginApi.json();
-const mailChamp = document.getElementById("email")
-const passwordChamp = document.getElementById("password")
-const submitBtn = document.getElementById("submit")
 
-submitBtn.addEventListener("click", () => {
-  console.log("salut zinzin");
-});

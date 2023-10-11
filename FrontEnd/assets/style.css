@@ -214,6 +214,10 @@ li:hover {
 	gap: 10px;
 }
 
+.hidden_class {
+display:none;
+}
+
 #login {
 	width:375px;
 	margin: auto;
