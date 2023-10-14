@@ -11,8 +11,7 @@
 		rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<script type="module" src="./script.js"></script>
-	<script type="module" src="./login.js"></script>
+	
 </head>
 
 <body>
@@ -23,8 +22,9 @@
 				<a href="#portfolio"><li>projets</li></a>
 				<li>contact</li>
 				<a href="./login.html">
-					<li id="login__btn">login</li>
+				<li id="login__btn">login</li>
 				</a>
+				<li id="logout__btn">logout</li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
@@ -55,7 +55,7 @@
 		<section id="contact">
 			<h2>Contact</h2></a>
 			<p>Vous avez un projet ? Discutons-en !</p>
-			<form action="#" method="post">
+			<form action="#" method="post" id="login__form">
 				<label for="name">Nom</label>
 				<input type="text" name="name" id="name">
 				<label for="email">Email</label>
@@ -74,6 +74,9 @@
 			</ul>
 		</nav>
 	</footer>
+	<script type="module" src="./login.js"></script>
+	<script type="module" src="./script.js"></script>
+	
 </body>
 
 </html>

@@ -218,6 +218,14 @@ li:hover {
 display:none;
 }
 
+#logout__btn {
+	display: none;
+}
+
+#error-message {
+	margin-top: 15px;
+}
+
 #login {
 	width:375px;
 	margin: auto;
