@@ -63,6 +63,7 @@ body {
 }
 
 header {
+	position: relative;
 	display: flex;
 	justify-content: space-between;
 	margin: 50px 0;
@@ -216,6 +217,15 @@ li:hover {
 
 .hidden_class {
 display:none;
+}
+
+.user__connected{
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 60px;
+	width: 100%	;
+	background: #000000;
 }
 
 #logout__btn {

@@ -43,9 +43,20 @@ const updateLogoutButton = () => {
   const logoutBtn = document.getElementById("logout__btn");
   const loginBtn = document.getElementById("login__btn");
   
+  const Header = document.querySelector("body");
+  const usersHeader = document.createElement("div");
+  Header.appendChild(usersHeader);
+  
+  const filters = document.getElementById("filters")
+
+  const porfolioDiv = document.getElementById("portfolio")
+  
   if (logoutBtn) {
     logoutBtn.style.display = "block";
-    loginBtn.style.display = "none"
+    loginBtn.style.display = "none";
+    usersHeader.classList.add("user__connected");
+    Header.style.marginTop = "97px";
+    filters.style.display = "none"
   }
 };
 
@@ -53,9 +64,7 @@ const logoutBtn = document.getElementById("logout__btn");
 
 if (logoutBtn) {
   logoutBtn.addEventListener("click", () => {
-    // Supprimer le token utilisateur du localStorage
     localStorage.removeItem("userToken");
-    // Rediriger vers la page de connexion (ou toute autre page appropriée)
     window.location.href = "login.html";
   });
 }
