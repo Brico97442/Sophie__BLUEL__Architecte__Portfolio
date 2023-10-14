@@ -228,7 +228,7 @@ display:none;
 	background: #000000;
 }
 
-#logout__btn {
+.logout__btn {
 	display: none;
 }
 

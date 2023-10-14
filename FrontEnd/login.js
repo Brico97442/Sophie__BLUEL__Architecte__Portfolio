@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logout__btn");
 
   if (userToken) {
-    updateLogoutButton();
+    userConnected();
   } else {
     logoutBtn.style.display = "none";
   }
@@ -16,7 +16,7 @@ form.addEventListener("submit", async (event) => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const response = await fetch("http://localhost:5678/api/users/login", {
+  const response = await fetch("http://localhost:5678/api/users/login",{
     method: "POST",
     headers: {
       accept: "application/json",
@@ -31,7 +31,7 @@ form.addEventListener("submit", async (event) => {
   if (response.ok) {
     const data = await response.json();
     localStorage.setItem("userToken", JSON.stringify({ token: data.token }));
-    updateLogoutButton();
+    userConnected();
     window.location.href = "index.html";
   } else {
     const messageError = document.querySelector("#error-message");
@@ -39,8 +39,11 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
-const updateLogoutButton = () => {
-  const logoutBtn = document.getElementById("logout__btn");
+const userConnected = () => {
+  const liContainer = document.querySelector("ul") 
+  const logoutBtn = document.createElement("li")
+  liContainer.appendChild(logoutBtn);
+  
   const loginBtn = document.getElementById("login__btn");
   
   const Header = document.querySelector("body");
@@ -48,8 +51,6 @@ const updateLogoutButton = () => {
   Header.appendChild(usersHeader);
   
   const filters = document.getElementById("filters")
-
-  const porfolioDiv = document.getElementById("portfolio")
   
   if (logoutBtn) {
     logoutBtn.style.display = "block";
@@ -57,6 +58,9 @@ const updateLogoutButton = () => {
     usersHeader.classList.add("user__connected");
     Header.style.marginTop = "97px";
     filters.style.display = "none"
+    logoutBtn.classList.add("logout__btn")
+    logoutBtn.innerHTML = "logout";
+    loginBtn.insertAdjacentElement("afterend",logoutBtn);
   }
 };
 
