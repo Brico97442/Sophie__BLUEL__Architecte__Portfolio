@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logout__btn");
 
   if (userToken) {
-    userConnected();
+    updateLogoutButton();
   } else {
     logoutBtn.style.display = "none";
   }
@@ -16,7 +16,7 @@ form.addEventListener("submit", async (event) => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const response = await fetch("http://localhost:5678/api/users/login",{
+  const response = await fetch("http://localhost:5678/api/users/login", {
     method: "POST",
     headers: {
       accept: "application/json",
@@ -31,7 +31,7 @@ form.addEventListener("submit", async (event) => {
   if (response.ok) {
     const data = await response.json();
     localStorage.setItem("userToken", JSON.stringify({ token: data.token }));
-    userConnected();
+    updateLogoutButton();
     window.location.href = "index.html";
   } else {
     const messageError = document.querySelector("#error-message");
@@ -39,28 +39,41 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
-const userConnected = () => {
-  const liContainer = document.querySelector("ul") 
-  const logoutBtn = document.createElement("li")
-  liContainer.appendChild(logoutBtn);
-  
+const updateLogoutButton = () => {
+  const logoutBtn = document.getElementById("logout__btn");
   const loginBtn = document.getElementById("login__btn");
   
   const Header = document.querySelector("body");
   const usersHeader = document.createElement("div");
+  usersHeader.classList.add("user__connected");
   Header.appendChild(usersHeader);
-  
-  const filters = document.getElementById("filters")
-  
+
+  const icon = document.createElement("i")
+  const textIcon = document.createElement("p")
+  textIcon.innerHTML = "Mode édition";
+  icon.classList.add("fa-regular","fa-pen-to-square");
+  usersHeader.appendChild(icon);
+  usersHeader.appendChild(textIcon);
+ 
+  // const portfolio = document.getElementById("portfolio");
+  const editContainer = document.createElement("button");
+  editContainer.classList.add("editBtn");
+  // portfolio.appendChild(editContainer);
+  const iconPortfolio = document.createElement("i");
+  const textPortfolio = document.createElement("p");
+  textPortfolio.innerHTML = "Modifier";
+  iconPortfolio.classList.add("fa-regular","fa-pen-to-square");
+  editContainer.appendChild(iconPortfolio);
+  editContainer.appendChild(textPortfolio);
+
+  const filters = document.getElementById("filters");
+
   if (logoutBtn) {
     logoutBtn.style.display = "block";
     loginBtn.style.display = "none";
-    usersHeader.classList.add("user__connected");
+    
     Header.style.marginTop = "97px";
-    filters.style.display = "none"
-    logoutBtn.classList.add("logout__btn")
-    logoutBtn.innerHTML = "logout";
-    loginBtn.insertAdjacentElement("afterend",logoutBtn);
+    filters.style.visibility = "hidden";
   }
 };
 

@@ -62,6 +62,8 @@ body {
 	font-size: 14px;
 }
 
+
+
 header {
 	position: relative;
 	display: flex;
@@ -75,7 +77,7 @@ header a {
 }
 
 section {
-	margin: 50px 0;
+	margin: 139px 0;
 	background-color: #fefefe;
 }
 
@@ -131,6 +133,8 @@ li:hover {
 #introduction {
 	display: flex;
 	align-items: center;
+	margin: auto;
+	max-width: 950px;
 }
 
 #introduction figure {
@@ -139,12 +143,12 @@ li:hover {
 
 #introduction img {
 	display: block;
-	margin: auto;
-	width: 80%;
+	width: 474px;
 }
 
 #introduction article {
-	flex: 1
+	flex: 1;
+	padding-left: 72px;
 }
 
 #introduction h2 {
@@ -157,11 +161,20 @@ li:hover {
 
 #portfolio h2 {
 	text-align: center;
+	margin: auto;
 	margin-bottom: 1em;
+	max-width: 950px;
+	
+}
+
+#portfolio {
+	position: relative;
 }
 
 .gallery {
 	width: 100%;
+	max-width: 950px;
+	margin: auto;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
@@ -220,12 +233,28 @@ display:none;
 }
 
 .user__connected{
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	position: absolute;
+	gap: 12px;
 	top: 0;
 	left: 0;
 	height: 60px;
 	width: 100%	;
 	background: #000000;
+	color: #ffff;
+}
+
+.editBtn {
+	display: flex;
+	position: absolute;
+	border: none;
+	background-color: #ffff;
+	top: 10px;
+	right: 365px;
+	gap: 12px;
+	cursor: pointer;
 }
 
 .logout__btn {

@@ -6,7 +6,6 @@ const works = await worksApi.json();
 
 // Fonction pour afficher les œuvres dans la galerie
 const displayWorks = async (worksToDisplay) => {
-  
   // Effacer le contenu actuel de la galerie
   galleryElement.innerHTML = "";
 
