@@ -327,12 +327,11 @@ li:hover {
 	position: absolute;
 	top: 4px;
 	right: 4px;
-	padding: 0;
+	padding: 1px 4px;
 	border: none;
-	height: 17px;
-	width: 17px;
 	background: #000;
 	border-radius: 2px;
+	cursor: pointer;
 }
 
 .delete__btn i::before{
@@ -340,8 +339,9 @@ li:hover {
 	justify-content: center;
 	align-items: center;
 	color: #fff;
-	width: 9px;
-	height : 11px ;
+
+	max-width: 9px;
+	max-height : 11px ;
 	font-weight: normal;
 	border: none;
 }
