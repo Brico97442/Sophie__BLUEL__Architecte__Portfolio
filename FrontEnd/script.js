@@ -116,7 +116,7 @@ editBtn.addEventListener("click", () => {
   modalContent.appendChild(hr);
   const modalSubmit = document.createElement("input");
   
-  modalSubmit.type = "buton";
+  modalSubmit.type = "submit";
   modalSubmit.value = "Ajouter une photo";
   modalContent.appendChild(modalSubmit);
 
