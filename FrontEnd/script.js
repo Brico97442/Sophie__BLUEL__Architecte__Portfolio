@@ -1,4 +1,4 @@
-import { loginRequest , updateLogoutButton } from "./utils.js";
+import { loginRequest, updateLogoutButton } from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const userToken = localStorage.getItem("userToken");
@@ -29,21 +29,20 @@ const worksApi = await fetch("http://localhost:5678/api/works");
 const works = await worksApi.json();
 
 // Fonction pour afficher les œuvres dans la galerie
+const galleryElement = document.querySelector(".gallery");
 const displayWorks = async (worksToDisplay) => {
-  const galleryElement = document.querySelector(".gallery");
   // Effacer le contenu actuel de la galerie
   galleryElement.innerHTML = "";
 
   for (let i = 0; i < worksToDisplay.length; i++) {
-    
     const picturesElement = document.createElement("figure");
     const img = document.createElement("img");
     const figCaption = document.createElement("figcaption");
-    
+
     img.src = worksToDisplay[i].imageUrl;
     img.alt = worksToDisplay[i].title;
     figCaption.innerHTML = worksToDisplay[i].title;
-    
+
     picturesElement.append(img, figCaption);
     galleryElement.appendChild(picturesElement);
   }
@@ -72,12 +71,11 @@ categoriesContainer.classList.add("center__row", "gap");
 
 // Boucle pour création et affichages des boutons catégories
 for (let i = 0; i < categories.length; i++) {
-  
   const categoryLi = document.createElement("li");
   const categoryBtn = document.createElement("button");
   const categoryId = categories[i].id;
   categoryBtn.innerHTML = categories[i].name;
-  
+
   categoryLi.appendChild(categoryBtn);
   categoriesContainer.appendChild(categoryLi);
   filtersElement.appendChild(categoriesContainer);
@@ -91,4 +89,54 @@ for (let i = 0; i < categories.length; i++) {
   });
 }
 
+const editBtn = document.querySelector(".editBtn");
+editBtn.addEventListener("click", () => {
+  const modalContainer = document.createElement("div");
+  modalContainer.classList.add("modale__container");
 
+  const body = document.querySelector("body");
+  body.appendChild(modalContainer);
+
+  const modalContent = document.createElement("div");
+  modalContent.classList.add("modal");
+  modalContent.style.opacity = "1";
+  modalContainer.appendChild(modalContent);
+
+  const modalGallery = document.createElement("div");
+  modalGallery.classList.add("modal__gallery");
+  const modalTittle = document.createElement("h3");
+  modalContent.appendChild(modalTittle);
+  modalTittle.innerHTML = "Galerie photo";
+  modalContent.appendChild(modalGallery);
+  const hr = document.createElement("hr");
+  modalContent.appendChild(hr);
+  const modalSubmit = document.createElement("input");
+  modalSubmit.type = "Submit";
+  modalSubmit.value = "Ajouter une photo";
+  modalContent.appendChild(modalSubmit);
+
+  const modalWorks = async (worksToDisplay) => {
+    // Effacer le contenu actuel de la galerie
+    modalGallery.innerHTML = "";
+
+    for (let i = 0; i < worksToDisplay.length; i++) {
+      
+      const picturesElement = document.createElement("figure");
+      
+      const img = document.createElement("img");
+      const deleteBtn = document.createElement("button")
+      deleteBtn.classList.add ("delete__btn")
+      const deleteIcon = document.createElement("i");
+      deleteIcon.classList.add("fas", "fa-trash-can")
+      deleteBtn.appendChild(deleteIcon)
+      picturesElement.append(img, deleteBtn);
+      picturesElement.style.position = "relative";
+
+      img.src = worksToDisplay[i].imageUrl;
+      img.alt = worksToDisplay[i].title;
+
+      modalGallery.appendChild(picturesElement);
+    }
+  };
+  modalWorks(works);
+});

@@ -2,10 +2,10 @@ export const updateLogoutButton = () => {
   const logoutBtn = document.getElementById("logout__btn");
   const loginBtn = document.getElementById("login__btn");
 
-  const Header = document.querySelector("body");
+  const body = document.querySelector("body");
   const usersHeader = document.createElement("div");
   usersHeader.classList.add("user__connected");
-  Header.appendChild(usersHeader);
+  body.appendChild(usersHeader);
 
   const icon = document.createElement("i");
   const textIcon = document.createElement("p");
@@ -19,18 +19,18 @@ export const updateLogoutButton = () => {
   if (logoutBtn) {
     logoutBtn.style.display = "block";
     loginBtn.style.display = "none";
-    Header.style.marginTop = "97px";
+    body.style.marginTop = "97px";
     filters.style.visibility = "hidden";
     const portfolio = document.getElementById("portfolio");
-    const editContainer = document.createElement("button");
-    editContainer.classList.add("editBtn");
-    portfolio.appendChild(editContainer);
+    const editBtn = document.createElement("button");
+    editBtn.classList.add("editBtn");
+    portfolio.appendChild(editBtn);
     const iconPortfolio = document.createElement("i");
     const textPortfolio = document.createElement("p");
     textPortfolio.innerHTML = "Modifier";
     iconPortfolio.classList.add("fa-regular", "fa-pen-to-square");
-    editContainer.appendChild(iconPortfolio);
-    editContainer.appendChild(textPortfolio);
+    editBtn.appendChild(iconPortfolio);
+    editBtn.appendChild(textPortfolio);
   }
 };
 

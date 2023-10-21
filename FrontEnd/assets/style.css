@@ -116,7 +116,7 @@ nav a {
 	display: flex;
 	align-items: center;
 	text-decoration: none;
-	color: #000; 
+	color: #000;
 }
 
 nav li {
@@ -164,7 +164,7 @@ li:hover {
 	margin: auto;
 	margin-bottom: 1em;
 	max-width: 950px;
-	
+
 }
 
 #portfolio {
@@ -229,10 +229,10 @@ li:hover {
 }
 
 .hidden_class {
-display:none;
+	display: none;
 }
 
-.user__connected{
+.user__connected {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -241,7 +241,7 @@ display:none;
 	top: 0;
 	left: 0;
 	height: 60px;
-	width: 100%	;
+	width: 100%;
 	background: #000000;
 	color: #ffff;
 }
@@ -261,12 +261,97 @@ display:none;
 	display: none;
 }
 
+.modale__container {
+	position: fixed;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 105px;
+	background-color: #ffff;
+	border-radius: 10px
+}
+
+.modal h3 {
+	text-align: center;
+	font-size: 26px;
+	margin-top: 60px;
+}
+
+.modal hr {
+	border: solid 1px #B3B3B3;
+	width: 100%;
+	margin-top: 68px;
+}
+
+
+
+.modal__gallery {
+	margin: auto;
+	margin-top: 36px;
+	display: grid;
+	grid-template-columns: 77px 77px 77px 77px 77px;
+	grid-gap: 9px;
+}
+
+.modal__gallery img {
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+}
+
+
+
+.modal input {
+	border: none;
+	font-family: 'Syne';
+	font-size: 14px;
+	font-weight: normal;
+	width: 237px;
+	height: 36px;
+}
+
+
+
+.delete__btn {
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	padding: 0;
+	border: none;
+	height: 17px;
+	width: 17px;
+	background: #000;
+	border-radius: 2px;
+}
+
+.delete__btn i::before{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	width: 9px;
+	height : 11px ;
+	font-weight: normal;
+	border: none;
+}
+
 #error-message {
 	margin-top: 15px;
 }
 
 #login {
-	width:375px;
+	width: 375px;
 	margin: auto;
 	text-align: center;
 	margin-bottom: 355px;
@@ -307,7 +392,7 @@ display:none;
 
 #login p {
 	text-decoration: underline;
-	cursor:pointer
+	cursor: pointer
 }
 
 #contact {
@@ -359,8 +444,8 @@ input[type="submit"] {
 	border-radius: 60px;
 }
 
-footer { 
- height: 60px;
+footer {
+	height: 60px;
 }
 
 footer nav ul {
