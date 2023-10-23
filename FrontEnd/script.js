@@ -90,13 +90,14 @@ for (let i = 0; i < categories.length; i++) {
 }
 
 const editBtn = document.querySelector(".editBtn");
+// Ajouter un écouteur d'événements pour le clic sur Edit bouton et ouverture de la fenêtre modale 
 editBtn.addEventListener("click", () => {
   const modalContainer = document.createElement("div");
   modalContainer.classList.add("modale__container");
 
   const body = document.querySelector("body");
   body.appendChild(modalContainer);
-
+  //création de la modale 
   const modalContent = document.createElement("div");
   modalContent.classList.add("modal");
   modalContent.style.opacity = "1";
@@ -104,22 +105,37 @@ editBtn.addEventListener("click", () => {
 
   const modalGallery = document.createElement("div");
   modalGallery.classList.add("modal__gallery");
+  // Titre de la fenêtre modale 
   
   const modalTittle = document.createElement("h3");
   modalContent.appendChild(modalTittle);
- 
   modalTittle.innerHTML = "Galerie photo";
   modalContent.appendChild(modalGallery);
   
   const hr = document.createElement("hr");
- 
   modalContent.appendChild(hr);
-  const modalSubmit = document.createElement("input");
+ //Ajout du bouton Submit ajouter 
   
+  const modalSubmit = document.createElement("input");
   modalSubmit.type = "submit";
   modalSubmit.value = "Ajouter une photo";
   modalContent.appendChild(modalSubmit);
 
+  const closeModal = document.createElement("button")
+  modalContent.appendChild(closeModal);
+  closeModal.classList.add("btn__closemodal")
+  
+  
+   const closeModalicons = document.createElement("i");
+   closeModalicons.classList.add("fas", "fa-xmark")
+   closeModal.appendChild(closeModalicons)
+   
+   // Ajouter un écouteur d'événements pour la fermeture de la modler au click
+   closeModal.addEventListener("click", () => {
+    modalContainer.style.display = "none";
+   });
+  
+  
   const modalWorks = async (worksToDisplay) => {
     // Effacer le contenu actuel de la galerie
     modalGallery.innerHTML = "";
@@ -144,4 +160,7 @@ editBtn.addEventListener("click", () => {
     }
   };
   modalWorks(works);
+  
 });
+
+

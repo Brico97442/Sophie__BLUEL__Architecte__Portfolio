@@ -274,6 +274,7 @@ li:hover {
 }
 
 .modal {
+	position: relative;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -339,11 +340,23 @@ li:hover {
 	justify-content: center;
 	align-items: center;
 	color: #fff;
-
 	max-width: 9px;
 	max-height : 11px ;
 	font-weight: normal;
 	border: none;
+}
+
+.btn__closemodal {
+position: absolute;	
+top: 30px;
+right: 30px;
+width: 24px;
+height: 24px;
+color: #000;
+border: none;
+margin: 0;
+padding: 0;
+cursor: pointer;
 }
 
 #error-message {
