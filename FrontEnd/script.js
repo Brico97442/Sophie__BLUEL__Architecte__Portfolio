@@ -3,7 +3,6 @@ import { loginRequest, updateLogoutButton } from "./utils.js";
 document.addEventListener("DOMContentLoaded", () => {
   const userToken = localStorage.getItem("userToken");
   const logoutBtn = document.getElementById("logout__btn");
-
   if (userToken) {
     updateLogoutButton();
   } else {
@@ -24,6 +23,7 @@ if (logoutBtn) {
     window.location.href = "login.html";
   });
 }
+
 // Code pour récupérer les travaux du BackEnd
 const worksApi = await fetch("http://localhost:5678/api/works");
 const works = await worksApi.json();
@@ -114,12 +114,14 @@ editBtn.addEventListener("click", () => {
   
   const hr = document.createElement("hr");
   modalContent.appendChild(hr);
- //Ajout du bouton Submit ajouter 
+ 
+  //Ajout du bouton Submit ajouter de la modale 
   
-  const modalSubmit = document.createElement("input");
-  modalSubmit.type = "submit";
-  modalSubmit.value = "Ajouter une photo";
-  modalContent.appendChild(modalSubmit);
+  const addPicture = document.createElement("input");
+  addPicture.type = "submit";
+  addPicture.value = "Ajouter une photo";
+  modalContent.appendChild(addPicture);
+  //Ajout du bouton close pour fermer la modale
 
   const closeModal = document.createElement("button")
   modalContent.appendChild(closeModal);
@@ -130,12 +132,15 @@ editBtn.addEventListener("click", () => {
    closeModalicons.classList.add("fas", "fa-xmark")
    closeModal.appendChild(closeModalicons)
    
-   // Ajouter un écouteur d'événements pour la fermeture de la modler au click
+   // Ajouter un écouteur d'événements pour la fermeture de la modale au click
    closeModal.addEventListener("click", () => {
     modalContainer.style.display = "none";
    });
-  
-  
+   modalContent.addEventListener("mouseleave", () => {
+    modalContainer.style.display = "none";
+   });
+   
+  // Ajouter d'une fonctions pour récuper les travaux existant 
   const modalWorks = async (worksToDisplay) => {
     // Effacer le contenu actuel de la galerie
     modalGallery.innerHTML = "";
