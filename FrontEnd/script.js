@@ -1,13 +1,7 @@
-import { loginRequest, updateLogoutButton } from "./utils.js";
+import { loginRequest, userConnected, } from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const userToken = localStorage.getItem("userToken");
-  const logoutBtn = document.getElementById("logout__btn");
-  if (userToken) {
-    updateLogoutButton();
-  } else {
-    logoutBtn.style.display = "none";
-  }
+ userConnected();
 });
 
 const form = document.getElementById("login__form");
@@ -15,6 +9,7 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   loginRequest();
 });
+
 
 const logoutBtn = document.getElementById("logout__btn");
 if (logoutBtn) {
@@ -90,82 +85,89 @@ for (let i = 0; i < categories.length; i++) {
 }
 
 const editBtn = document.querySelector(".editBtn");
-// Ajouter un écouteur d'événements pour le clic sur Edit bouton et ouverture de la fenêtre modale 
+
+// Ajouter un écouteur d'événements pour le clic sur Edit bouton et ouverture de la fenêtre modale
 editBtn.addEventListener("click", () => {
   const modalContainer = document.createElement("div");
   modalContainer.classList.add("modale__container");
 
   const body = document.querySelector("body");
   body.appendChild(modalContainer);
-  //création de la modale 
+
+  //création de la modale
   const modalContent = document.createElement("div");
   modalContent.classList.add("modal");
   modalContent.style.opacity = "1";
   modalContainer.appendChild(modalContent);
 
+  //Ajout de la galerie des travaux dasns la fenêtre modal
   const modalGallery = document.createElement("div");
   modalGallery.classList.add("modal__gallery");
-  // Titre de la fenêtre modale 
-  
+
+  // Ajout du titre de la fenêtre modale
   const modalTittle = document.createElement("h3");
   modalContent.appendChild(modalTittle);
   modalTittle.innerHTML = "Galerie photo";
   modalContent.appendChild(modalGallery);
-  
+
+  //Ajout de la barre de séparation de la fenêtre modal
   const hr = document.createElement("hr");
   modalContent.appendChild(hr);
- 
-  //Ajout du bouton Submit ajouter de la modale 
-  
+
+  //Ajout du bouton Submit de la fenêtre modale
   const addPicture = document.createElement("input");
   addPicture.type = "submit";
   addPicture.value = "Ajouter une photo";
   modalContent.appendChild(addPicture);
-  //Ajout du bouton close pour fermer la modale
 
-  const closeModal = document.createElement("button")
+  //Ajout du bouton close pour fermer la modale
+  const closeModal = document.createElement("button");
   modalContent.appendChild(closeModal);
-  closeModal.classList.add("btn__closemodal")
-  
-  
-   const closeModalicons = document.createElement("i");
-   closeModalicons.classList.add("fas", "fa-xmark")
-   closeModal.appendChild(closeModalicons)
-   
-   // Ajouter un écouteur d'événements pour la fermeture de la modale au click
-   closeModal.addEventListener("click", () => {
+  closeModal.classList.add("btn__closemodal");
+
+  //Ajout Icone x-mark pour la fermeture de la modale
+  const closeModalicons = document.createElement("i");
+  closeModalicons.classList.add("fas", "fa-xmark");
+  closeModal.appendChild(closeModalicons);
+
+  // Ajouter un écouteur d'événements pour la fermeture de la modale au click
+  closeModal.addEventListener("click", () => {
     modalContainer.style.display = "none";
-   });
-   modalContent.addEventListener("mouseleave", () => {
-    modalContainer.style.display = "none";
-   });
-   
+  });
+  
+  //  modalContent.addEventListener("mouseleave", () => {
+  //  modalContainer.style.display = "none";
+  //  });
+
+  
   // Ajouter d'une fonctions pour récuper les travaux existant 
   const modalWorks = async (worksToDisplay) => {
+   
     // Effacer le contenu actuel de la galerie
     modalGallery.innerHTML = "";
 
+    //Boucle pour récupérer les travaux
     for (let i = 0; i < worksToDisplay.length; i++) {
       
       const picturesElement = document.createElement("figure");
-      
       const img = document.createElement("img");
-      const deleteBtn = document.createElement("button")
-      deleteBtn.classList.add ("delete__btn")
-      const deleteIcon = document.createElement("i");
-      deleteIcon.classList.add("fas", "fa-trash-can")
-      deleteBtn.appendChild(deleteIcon)
-      picturesElement.append(img, deleteBtn);
-      picturesElement.style.position = "relative";
-
       img.src = worksToDisplay[i].imageUrl;
       img.alt = worksToDisplay[i].title;
-
+      
+      //Ajout du bouton corbeille (suprimer) à chaque élément de la boucle 
+      const deleteBtn = document.createElement("button");
+      deleteBtn.classList.add("delete__btn");
+      const deleteIcon = document.createElement("i");
+      deleteIcon.classList.add("fas", "fa-trash-can");
+      
+      deleteBtn.appendChild(deleteIcon);
+      picturesElement.append(img, deleteBtn);
       modalGallery.appendChild(picturesElement);
+      picturesElement.style.position = "relative";
+      
     }
   };
-  modalWorks(works);
   
+  //Appel de la fonction pour afficher les travaux dans la galerie modal 
+  modalWorks(works);
 });
-
-

@@ -1,4 +1,42 @@
-export const updateLogoutButton = () => {
+
+//Ajout d'une fonction pour loguer l'utilisateur    
+export const loginRequest = async () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const response = await fetch("http://localhost:5678/api/users/login", {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    localStorage.setItem("userToken", JSON.stringify({ token: data.token }));
+    adminPanel();
+    window.location.href = "index.html";
+  } else {
+    const messageError = document.querySelector("#error-message");
+    messageError.innerHTML = "Erreur dans l'identifiant ou le mot de passe";
+  }
+};
+
+export const userConnected = () => {
+  const userToken = localStorage.getItem("userToken");
+  const logoutBtn = document.getElementById("logout__btn");
+  if (userToken) {
+    adminPanel();
+  } else {
+    logoutBtn.style.display = "none";
+  }
+};
+
+const adminPanel = () => {
   const logoutBtn = document.getElementById("logout__btn");
   const loginBtn = document.getElementById("login__btn");
 
@@ -34,50 +72,4 @@ export const updateLogoutButton = () => {
   }
 };
 
-export const loginRequest = async () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  const response = await fetch("http://localhost:5678/api/users/login", {
-    method: "POST",
-    headers: {
-      accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email,
-      password,
-    }),
-  });
 
-  if (response.ok) {
-    const data = await response.json();
-    localStorage.setItem("userToken", JSON.stringify({ token: data.token }));
-    updateLogoutButton();
-    window.location.href = "index.html";
-  } else {
-    const messageError = document.querySelector("#error-message");
-    messageError.innerHTML = "Erreur dans l'identifiant ou le mot de passe";
-  }
-};
-
-export const categoriesDisplay = async () => {
-  const categoriesApi = await fetch("http://localhost:5678/api/categories");
-const categories = await categoriesApi.json();
-  for (let i = 0; i < categories.length; i++) {
-    const categoryLi = document.createElement("li");
-    const categoryBtn = document.createElement("button");
-    const categoryId = categories[i].id;
-    categoryBtn.innerHTML = categories[i].name;
-    categoryLi.appendChild(categoryBtn);
-    categoriesContainer.appendChild(categoryLi);
-    filtersElement.appendChild(categoriesContainer);
-
-    // Application du style sur les boutons catégories
-    categoryBtn.classList.add("btn__style");
-
-    // Ajouter un écouteur d'événements pour le clic sur chaque bouton de catégorie
-    categoryLi.addEventListener("click", () => {
-      updateDisplay(categoryId);
-    });
-  }
-};
