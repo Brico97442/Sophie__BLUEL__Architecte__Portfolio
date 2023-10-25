@@ -2,6 +2,7 @@ import {
   categoriesRequest,
   displayWorks,
   loginRequest,
+  updateDisplay,
   userConnected,
 } from "./utils.js";
 
@@ -30,12 +31,7 @@ const works = await worksApi.json();
 displayWorks(works);
 
 // Fonction pour mettre à jour l'affichage en fonction de la catégorie
-const updateDisplay = async (categoryId) => {
-  const worksToDisplay = categoryId
-    ? works.filter((picture) => picture.categoryId === categoryId)
-    : works;
-  await displayWorks(worksToDisplay);
-};
+updateDisplay();
 
 // Code pour afficher tous les objets par défaut
 await updateDisplay(null);

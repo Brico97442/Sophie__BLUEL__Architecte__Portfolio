@@ -18,7 +18,17 @@ export const displayWorks = async (worksToDisplay) => {
     galleryElement.appendChild(picturesElement);
   }
 };
+// Fonction pour mettre à jour l'affichage en fonction de la catégorie
+export const updateDisplay = async (categoryId) => {
+  const worksApi = await fetch("http://localhost:5678/api/works");
+  const works = await worksApi.json();
+  const worksToDisplay = categoryId
+    ? works.filter((picture) => picture.categoryId === categoryId)
+    : works;
+  await displayWorks(worksToDisplay);
+};
 
+// Fonction pour récupérer les catégories via l'api 
 export const categoriesRequest = async () => {
   // Code pour récupérer les catégories du BackEnd
 const categoriesApi = await fetch("http://localhost:5678/api/categories");
