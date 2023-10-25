@@ -25,7 +25,7 @@ export const updateDisplay = async (categoryId) => {
   const worksToDisplay = categoryId
     ? works.filter((picture) => picture.categoryId === categoryId)
     : works;
-  await displayWorks(worksToDisplay);
+  displayWorks(worksToDisplay);
 };
 
 // Fonction pour récupérer les catégories via l'api 

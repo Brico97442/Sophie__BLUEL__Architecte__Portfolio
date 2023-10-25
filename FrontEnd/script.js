@@ -6,6 +6,8 @@ import {
   userConnected,
 } from "./utils.js";
 
+
+
 document.addEventListener("DOMContentLoaded", () => {
   userConnected();
 });
@@ -46,6 +48,13 @@ editBtn.addEventListener("click", () => {
   const modalContainer = document.createElement("div");
   modalContainer.classList.add("modale__container");
 
+  document.addEventListener('click', function (event) {
+    if(event.target.className === 'modale__container'){
+      modalContainer.remove() 
+      console.log(event)   
+    }
+  }, false);
+  
   const body = document.querySelector("body");
   body.appendChild(modalContainer);
 
@@ -92,10 +101,6 @@ editBtn.addEventListener("click", () => {
     modalContainer.style.display = "none";
   });
 
-  //  modalContent.addEventListener("mouseleave", () => {
-  //  modalContainer.style.display = "none";
-  //  });
-
   // Ajouter d'une fonctions pour récuper les travaux existant
   const modalWorks = async (worksToDisplay) => {
     // Effacer le contenu actuel de la galerie
@@ -119,8 +124,10 @@ editBtn.addEventListener("click", () => {
       picturesElement.style.position = "relative";
 
       const workId = worksToDisplay[i].id;
-      // Ajout d'un EventListener au click sur la corbeille pour supprimer un travail
+      
+      // EventListener au click sur la corbeille pour supprimer un travail
       deleteBtn.addEventListener("click", async () => {
+      
         const userToken = localStorage.getItem("userToken");
 
         if (userToken) {
@@ -130,7 +137,7 @@ editBtn.addEventListener("click", () => {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${JSON.parse(userToken).token}`, // Inclure le token d'authentification
+                Authorization: `Bearer ${JSON.parse(userToken).token}`, 
               },
             }
           );
