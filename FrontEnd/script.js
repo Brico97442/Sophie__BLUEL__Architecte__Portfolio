@@ -1,7 +1,12 @@
-import { loginRequest, userConnected, } from "./utils.js";
+import {
+  categoriesRequest,
+  displayWorks,
+  loginRequest,
+  userConnected,
+} from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
- userConnected();
+  userConnected();
 });
 
 const form = document.getElementById("login__form");
@@ -9,7 +14,6 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   loginRequest();
 });
-
 
 const logoutBtn = document.getElementById("logout__btn");
 if (logoutBtn) {
@@ -23,25 +27,7 @@ if (logoutBtn) {
 const worksApi = await fetch("http://localhost:5678/api/works");
 const works = await worksApi.json();
 
-// Fonction pour afficher les œuvres dans la galerie
-const galleryElement = document.querySelector(".gallery");
-const displayWorks = async (worksToDisplay) => {
-  // Effacer le contenu actuel de la galerie
-  galleryElement.innerHTML = "";
-
-  for (let i = 0; i < worksToDisplay.length; i++) {
-    const picturesElement = document.createElement("figure");
-    const img = document.createElement("img");
-    const figCaption = document.createElement("figcaption");
-
-    img.src = worksToDisplay[i].imageUrl;
-    img.alt = worksToDisplay[i].title;
-    figCaption.innerHTML = worksToDisplay[i].title;
-
-    picturesElement.append(img, figCaption);
-    galleryElement.appendChild(picturesElement);
-  }
-};
+displayWorks(works);
 
 // Fonction pour mettre à jour l'affichage en fonction de la catégorie
 const updateDisplay = async (categoryId) => {
@@ -54,35 +40,8 @@ const updateDisplay = async (categoryId) => {
 // Code pour afficher tous les objets par défaut
 await updateDisplay(null);
 
-// Code pour récupérer les catégories du BackEnd
-const categoriesApi = await fetch("http://localhost:5678/api/categories");
-const categories = await categoriesApi.json();
-
-// Ajout de la catégorie "Tous" dans l'API catégories
-categories.unshift({ name: "Tous", categoryId: null });
-const filtersElement = document.getElementById("filters");
-const categoriesContainer = document.createElement("ul");
-categoriesContainer.classList.add("center__row", "gap");
-
-// Boucle pour création et affichages des boutons catégories
-for (let i = 0; i < categories.length; i++) {
-  const categoryLi = document.createElement("li");
-  const categoryBtn = document.createElement("button");
-  const categoryId = categories[i].id;
-  categoryBtn.innerHTML = categories[i].name;
-
-  categoryLi.appendChild(categoryBtn);
-  categoriesContainer.appendChild(categoryLi);
-  filtersElement.appendChild(categoriesContainer);
-
-  // Application du style sur les boutons catégories
-  categoryBtn.classList.add("btn__style");
-
-  // Ajouter un écouteur d'événements pour le clic sur chaque bouton de catégorie
-  categoryLi.addEventListener("click", () => {
-    updateDisplay(categoryId);
-  });
-}
+// Récupération de la fonction categories request pour récuperer
+await categoriesRequest();
 
 const editBtn = document.querySelector(".editBtn");
 
@@ -115,10 +74,12 @@ editBtn.addEventListener("click", () => {
   modalContent.appendChild(hr);
 
   //Ajout du bouton Submit de la fenêtre modale
-  const addPicture = document.createElement("input");
-  addPicture.type = "submit";
-  addPicture.value = "Ajouter une photo";
-  modalContent.appendChild(addPicture);
+  const btnAddpicture = document.createElement("input");
+  btnAddpicture.type = "submit";
+  btnAddpicture.value = "Ajouter une photo";
+  modalContent.appendChild(btnAddpicture);
+
+  btnAddpicture.addEventListener("click", () => {});
 
   //Ajout du bouton close pour fermer la modale
   const closeModal = document.createElement("button");
@@ -134,40 +95,60 @@ editBtn.addEventListener("click", () => {
   closeModal.addEventListener("click", () => {
     modalContainer.style.display = "none";
   });
-  
+
   //  modalContent.addEventListener("mouseleave", () => {
   //  modalContainer.style.display = "none";
   //  });
 
-  
-  // Ajouter d'une fonctions pour récuper les travaux existant 
+  // Ajouter d'une fonctions pour récuper les travaux existant
   const modalWorks = async (worksToDisplay) => {
-   
     // Effacer le contenu actuel de la galerie
     modalGallery.innerHTML = "";
-
     //Boucle pour récupérer les travaux
     for (let i = 0; i < worksToDisplay.length; i++) {
-      
       const picturesElement = document.createElement("figure");
       const img = document.createElement("img");
       img.src = worksToDisplay[i].imageUrl;
       img.alt = worksToDisplay[i].title;
-      
-      //Ajout du bouton corbeille (suprimer) à chaque élément de la boucle 
+
+      //Ajout du bouton corbeille (suprimer) à chaque élément de la boucle
       const deleteBtn = document.createElement("button");
       deleteBtn.classList.add("delete__btn");
       const deleteIcon = document.createElement("i");
       deleteIcon.classList.add("fas", "fa-trash-can");
-      
+
       deleteBtn.appendChild(deleteIcon);
       picturesElement.append(img, deleteBtn);
       modalGallery.appendChild(picturesElement);
       picturesElement.style.position = "relative";
-      
+
+      const workId = worksToDisplay[i].id;
+      // Ajout d'un EventListener au click sur la corbeille pour supprimer un travail
+      deleteBtn.addEventListener("click", async () => {
+        const userToken = localStorage.getItem("userToken");
+
+        if (userToken) {
+          const responseDelete = await fetch(
+            `http://localhost:5678/api/works/${workId}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${JSON.parse(userToken).token}`, // Inclure le token d'authentification
+              },
+            }
+          );
+
+          if (responseDelete.ok) {
+            picturesElement.remove();
+            await updateDisplay(null);
+          } else {
+            console.error("Échec de la suppression du travail.");
+          }
+        } 
+      });
     }
   };
-  
-  //Appel de la fonction pour afficher les travaux dans la galerie modal 
+  //Appel de la fonction pour afficher les travaux dans la galerie modal
   modalWorks(works);
 });
