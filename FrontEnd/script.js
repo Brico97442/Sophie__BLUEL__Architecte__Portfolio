@@ -46,17 +46,16 @@ const editBtn = document.querySelector(".editBtn");
 // Ajouter un écouteur d'événements pour le clic sur Edit bouton et ouverture de la fenêtre modale
 editBtn.addEventListener("click", () => {
   const modalContainer = document.createElement("div");
-  modalContainer.classList.add("modale__container");
+  modalContainer.classList.add("modal__container");
 
-  document.addEventListener('click', function (event) {
-    if(event.target.className === 'modale__container'){
-      modalContainer.remove() 
-      console.log(event)   
-    }
-  }, false);
-  
   const body = document.querySelector("body");
   body.appendChild(modalContainer);
+  //Fermeture de la modale au clic à l'exterieur de la modal 
+  document.addEventListener('click', function (event) {
+    if(event.target.className === 'modal__container'){
+      modalContainer.remove()   
+    }
+  }, false);
 
   //création de la modale
   const modalContent = document.createElement("div");

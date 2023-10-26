@@ -18,6 +18,7 @@ export const displayWorks = async (worksToDisplay) => {
     galleryElement.appendChild(picturesElement);
   }
 };
+
 // Fonction pour mettre à jour l'affichage en fonction de la catégorie
 export const updateDisplay = async (categoryId) => {
   const worksApi = await fetch("http://localhost:5678/api/works");
