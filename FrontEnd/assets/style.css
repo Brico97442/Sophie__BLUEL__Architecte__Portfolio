@@ -280,7 +280,7 @@ li:hover {
 	flex-direction: column;
 	padding: 0 105px;
 	background-color: #ffff;
-	border-radius: 10px
+	border-radius: 10px;
 }
 
 .modal h3 {
@@ -294,8 +294,6 @@ li:hover {
 	width: 100%;
 	margin-top: 68px;
 }
-
-
 
 .modal__gallery {
 	margin: auto;
@@ -311,8 +309,6 @@ li:hover {
 	height: 100%;
 }
 
-
-
 .modal input {
 	border: none;
 	font-family: 'Syne';
@@ -321,8 +317,6 @@ li:hover {
 	width: 237px;
 	height: 36px;
 }
-
-
 
 .delete__btn {
 	position: absolute;
@@ -335,28 +329,87 @@ li:hover {
 	cursor: pointer;
 }
 
-.delete__btn i::before{
+.delete__btn i::before {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	color: #fff;
 	max-width: 9px;
-	max-height : 11px ;
+	max-height: 11px;
 	font-weight: normal;
 	border: none;
 }
 
 .btn__closemodal {
-position: absolute;	
-top: 30px;
-right: 30px;
-width: 24px;
-height: 24px;
-color: #000;
-border: none;
-margin: 0;
-padding: 0;
-cursor: pointer;
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	width: 24px;
+	height: 24px;
+	color: #000;
+	background: #fff;
+	border: none;
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
+}
+
+.btn__return {
+	position: absolute;
+	top: 30px;
+	left: 30px;
+	width: 24px;
+	height: 24px;
+	color: #000;
+	background: #fff;
+	border: none;
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
+}
+
+.add__picture__container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 10px;
+	width: 420px;
+	margin-top: 36px;
+}
+
+.add__picture__container i {
+	color: #B9C5CC;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 76px;
+	height: 76px;
+	margin-top: 13px;
+}
+
+
+
+.add__picture__container label, #addpicture {
+	padding: 10px 33px;
+	color: #306685;
+	font-weight: bolder;
+	background: #CBD6DC;
+	border-radius: 50px;
+}
+
+.add__picture__container input, #file-upload-button {
+	display: none;
+}
+
+.add__picture__container {
+	background: #E8F1F6;
+}
+
+.add__picture__text {
+	color: #444444;
+	font-size: 10px;
+	margin-top: 7px;
+	margin-bottom: 19px;
 }
 
 #error-message {

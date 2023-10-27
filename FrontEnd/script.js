@@ -6,8 +6,6 @@ import {
   userConnected,
 } from "./utils.js";
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
   userConnected();
 });
@@ -50,12 +48,17 @@ editBtn.addEventListener("click", () => {
 
   const body = document.querySelector("body");
   body.appendChild(modalContainer);
-  //Fermeture de la modale au clic à l'exterieur de la modal 
-  document.addEventListener('click', function (event) {
-    if(event.target.className === 'modal__container'){
-      modalContainer.remove()   
-    }
-  }, false);
+
+  //Fermeture de la modale au clic à l'exterieur de la modal
+  document.addEventListener(
+    "click",
+    function (event) {
+      if (event.target.className === "modal__container") {
+        modalContainer.remove();
+      }
+    },
+    false
+  );
 
   //création de la modale
   const modalContent = document.createElement("div");
@@ -63,27 +66,86 @@ editBtn.addEventListener("click", () => {
   modalContent.style.opacity = "1";
   modalContainer.appendChild(modalContent);
 
-  //Ajout de la galerie des travaux dasns la fenêtre modal
+  //Ajout de la galerie des travaux dans la fenêtre modal
   const modalGallery = document.createElement("div");
   modalGallery.classList.add("modal__gallery");
+  
+  
+  const modalAddwork = document.createElement("div");
+  const addPicturecontainer = document.createElement("div")
+  
 
+  modalAddwork.classList.add("modal__addwork");
+  addPicturecontainer.classList.add("add__picture__container")
+  
+  //Ajout d'une input pour pouvoir ajouter une nouvelle photo
+  const addPicturelabel = document.createElement("label");
+  addPicturelabel.innerText = "+ Ajouter photo";
+  
+  const addPictureicon = document.createElement("i")
+  addPictureicon.classList.add("far", "fa-image", "fa-5x")
+  addPicturelabel.id = "addpicture";
+  const addWork = document.createElement("input");
+  addWork.type = "file";
+  addWork.accept =".jpg,.png"
+  const addPictureAccepted = document.createElement("p")
+  addPictureAccepted.classList.add("add__picture__text")
+  addPictureAccepted.innerText ="jpg, png : 4mo max"
+  
+  modalAddwork.appendChild(addPicturecontainer)
+  addPicturecontainer.append(addPictureicon, addPicturelabel, addPictureAccepted)
+  //Ancrage de l'input file au label
+  addPicturelabel.appendChild(addWork);
+  
+  //cacher la modaladdwork 
+  modalAddwork.style.display = "none";
+  
   // Ajout du titre de la fenêtre modale
   const modalTittle = document.createElement("h3");
   modalContent.appendChild(modalTittle);
   modalTittle.innerHTML = "Galerie photo";
+
+  //Ancrage de la div modal__gallery à la div modal
   modalContent.appendChild(modalGallery);
+
+  //Ancrage de la div modal__addwork à la div modal
+  modalContent.appendChild(modalAddwork);
 
   //Ajout de la barre de séparation de la fenêtre modal
   const hr = document.createElement("hr");
   modalContent.appendChild(hr);
 
-  //Ajout du bouton Submit de la fenêtre modale
+  //Ajout du bouton "Ajouter" de la fenêtre modale
   const btnAddpicture = document.createElement("input");
   btnAddpicture.type = "submit";
   btnAddpicture.value = "Ajouter une photo";
   modalContent.appendChild(btnAddpicture);
 
-  btnAddpicture.addEventListener("click", () => {});
+  // Ajouter un addEventListener pour pouvoir ajouter un nouveau travail
+  btnAddpicture.addEventListener("click", () => {
+    //Changement tu titre de la modale;
+    modalTittle.innerHTML = "Ajout photo";
+
+    //Cacher la gallerie au click sur le bouton ajouter
+    modalGallery.style.display = "none";
+    modalAddwork.style.display = "flex";
+    //Ajout du bouton retour pour fermer la modale
+    const returnBtn = document.createElement("button");
+    modalContent.appendChild(returnBtn);
+    returnBtn.classList.add("btn__return");
+
+    //Ajout Icone left-Arrow pour la fermeture de la modale
+    const returnIcons = document.createElement("i");
+    returnIcons.classList.add("fas", "fa-arrow-left");
+    returnBtn.appendChild(returnIcons);
+
+    // Ajouter un addEventListener pour pouvoir réafficher la gallerie au click
+    returnBtn.addEventListener("click", () => {
+      returnBtn.style.display = "none";
+      modalGallery.style.display = "grid";
+      modalAddwork.style.display = "none";
+    });
+  });
 
   //Ajout du bouton close pour fermer la modale
   const closeModal = document.createElement("button");
@@ -95,7 +157,7 @@ editBtn.addEventListener("click", () => {
   closeModalicons.classList.add("fas", "fa-xmark");
   closeModal.appendChild(closeModalicons);
 
-  // Ajouter un écouteur d'événements pour la fermeture de la modale au click
+  // Ajouter un écouteur d'événements pour la fermeture de la modale au click sur la croix
   closeModal.addEventListener("click", () => {
     modalContainer.style.display = "none";
   });
@@ -123,10 +185,9 @@ editBtn.addEventListener("click", () => {
       picturesElement.style.position = "relative";
 
       const workId = worksToDisplay[i].id;
-      
+
       // EventListener au click sur la corbeille pour supprimer un travail
       deleteBtn.addEventListener("click", async () => {
-      
         const userToken = localStorage.getItem("userToken");
 
         if (userToken) {
@@ -136,7 +197,7 @@ editBtn.addEventListener("click", () => {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${JSON.parse(userToken).token}`, 
+                Authorization: `Bearer ${JSON.parse(userToken).token}`,
               },
             }
           );
@@ -147,7 +208,7 @@ editBtn.addEventListener("click", () => {
           } else {
             console.error("Échec de la suppression du travail.");
           }
-        } 
+        }
       });
     }
   };
