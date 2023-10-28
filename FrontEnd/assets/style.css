@@ -281,6 +281,7 @@ li:hover {
 	padding: 0 105px;
 	background-color: #ffff;
 	border-radius: 10px;
+	width: 420px;
 }
 
 .modal h3 {
@@ -317,6 +318,49 @@ li:hover {
 	width: 237px;
 	height: 36px;
 }
+
+.modal__addwork {
+	display: flex;
+	flex-direction: column;
+}
+
+#label__tittle {
+	margin-top: 30px;
+	color:#3D3D3D;
+	font-weight: 500;
+}
+
+#label__select {
+	margin-top: 21px;
+	color:#3D3D3D;
+	font-weight: 500;
+}
+
+.modal__addwork #input__tittle {
+	margin-top: 10px;
+	width: 420px;
+	height: 51px;
+	box-shadow: 0px 14px 14px 0px rgba(0,0,0,0.09);
+}
+
+.modal__addwork #select__categories {
+	border: none;
+	margin-top: 10px;
+	width: 420px;
+	height: 51px;
+	box-shadow: 0px 14px 14px 0px rgba(0,0,0,0.09);
+}
+.modal__addwork #select__categories::before {
+	width: 420px;
+	height: 51px;
+}
+
+#btn__valid {
+	background: #A7A7A7;
+	width: 237px;
+	font-size: 14px;
+}
+
 
 .delete__btn {
 	position: absolute;
@@ -375,6 +419,7 @@ li:hover {
 	border-radius: 10px;
 	width: 420px;
 	margin-top: 36px;
+	background: #E8F1F6;
 }
 
 .add__picture__container i {
@@ -399,10 +444,6 @@ li:hover {
 
 .add__picture__container input, #file-upload-button {
 	display: none;
-}
-
-.add__picture__container {
-	background: #E8F1F6;
 }
 
 .add__picture__text {

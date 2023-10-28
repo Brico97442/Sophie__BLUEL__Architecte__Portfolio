@@ -69,37 +69,65 @@ editBtn.addEventListener("click", () => {
   //Ajout de la galerie des travaux dans la fenêtre modal
   const modalGallery = document.createElement("div");
   modalGallery.classList.add("modal__gallery");
-  
-  
+
   const modalAddwork = document.createElement("div");
-  const addPicturecontainer = document.createElement("div")
-  
+  const addPicturecontainer = document.createElement("div");
 
   modalAddwork.classList.add("modal__addwork");
-  addPicturecontainer.classList.add("add__picture__container")
-  
+  addPicturecontainer.classList.add("add__picture__container");
+
   //Ajout d'une input pour pouvoir ajouter une nouvelle photo
   const addPicturelabel = document.createElement("label");
   addPicturelabel.innerText = "+ Ajouter photo";
-  
-  const addPictureicon = document.createElement("i")
-  addPictureicon.classList.add("far", "fa-image", "fa-5x")
+
+  const addPictureicon = document.createElement("i");
+  addPictureicon.classList.add("far", "fa-image", "fa-5x");
   addPicturelabel.id = "addpicture";
+
   const addWork = document.createElement("input");
   addWork.type = "file";
-  addWork.accept =".jpg,.png"
-  const addPictureAccepted = document.createElement("p")
-  addPictureAccepted.classList.add("add__picture__text")
-  addPictureAccepted.innerText ="jpg, png : 4mo max"
+  addWork.accept = ".jpg,.png";
+
+  const addPictureAccepted = document.createElement("p");
+  addPictureAccepted.classList.add("add__picture__text");
+  addPictureAccepted.innerText = "jpg, png : 4mo max";
+
+  const labelTittle = document.createElement("label");
+  labelTittle.id = ("label__tittle");
+  labelTittle.innerText = "Titre";
+
+  const inputTittle = document.createElement("input");
+  inputTittle.type = "Text";
+  inputTittle.id = ("input__tittle");
+
+  const labelSelect = document.createElement("label");
+  labelSelect.id = ("label__select")
+  labelSelect.innerText = "Catégorie";
   
-  modalAddwork.appendChild(addPicturecontainer)
-  addPicturecontainer.append(addPictureicon, addPicturelabel, addPictureAccepted)
+  const selectCategories = document.createElement("select");
+  selectCategories.id = "select__categories";
+  
+  
+  modalAddwork.append(
+    addPicturecontainer,
+    labelTittle,
+    inputTittle,
+    labelSelect,
+    selectCategories
+  );
+
+  addPicturecontainer.append(
+    addPictureicon,
+    addPicturelabel,
+    addPictureAccepted
+  );
+
   //Ancrage de l'input file au label
   addPicturelabel.appendChild(addWork);
-  
-  //cacher la modaladdwork 
+
+  //cacher la modaladdwork
   modalAddwork.style.display = "none";
-  
+
   // Ajout du titre de la fenêtre modale
   const modalTittle = document.createElement("h3");
   modalContent.appendChild(modalTittle);
@@ -120,15 +148,31 @@ editBtn.addEventListener("click", () => {
   btnAddpicture.type = "submit";
   btnAddpicture.value = "Ajouter une photo";
   modalContent.appendChild(btnAddpicture);
+  
+  //Ajout du bouton valider l'ajout d'une nouvelle photo caché par défaut
+  const btnValid = document.createElement("input");
+  btnValid.id =("btn__valid");
+  btnValid.type = "submit";
+  btnValid.value = "Valider";
+  modalContent.appendChild(btnValid);
+  btnValid.style.display = "none";
 
   // Ajouter un addEventListener pour pouvoir ajouter un nouveau travail
   btnAddpicture.addEventListener("click", () => {
+    
     //Changement tu titre de la modale;
     modalTittle.innerHTML = "Ajout photo";
-
+    
+    //Cacher le bouton Ajouter une photo au click sur le bouton ajouter une photo
+    btnAddpicture.style.display = "none"
+    
     //Cacher la gallerie au click sur le bouton ajouter
     modalGallery.style.display = "none";
     modalAddwork.style.display = "flex";
+    
+    //Aficher le bouton valider grisé au click sur le bouton ajouter la photo
+    btnValid.style.display = "block";
+    
     //Ajout du bouton retour pour fermer la modale
     const returnBtn = document.createElement("button");
     modalContent.appendChild(returnBtn);
@@ -141,6 +185,8 @@ editBtn.addEventListener("click", () => {
 
     // Ajouter un addEventListener pour pouvoir réafficher la gallerie au click
     returnBtn.addEventListener("click", () => {
+      btnAddpicture.style.display = "block";
+      btnValid.style.display = "none";
       returnBtn.style.display = "none";
       modalGallery.style.display = "grid";
       modalAddwork.style.display = "none";
