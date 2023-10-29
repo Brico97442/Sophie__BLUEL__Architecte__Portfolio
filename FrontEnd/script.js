@@ -1,10 +1,13 @@
 import {
   categoriesRequest,
   displayWorks,
-  loginRequest,
   updateDisplay,
-  userConnected,
 } from "./utils.js";
+
+import {
+  loginRequest,
+  userConnected,
+} from "./login.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   userConnected();
