@@ -1,13 +1,8 @@
-import {
-  categoriesRequest,
-  displayWorks,
-  updateDisplay,
-} from "./utils.js";
+import { categoriesRequest, getCategories, } from "./category.js";
 
-import {
-  loginRequest,
-  userConnected,
-} from "./login.js";
+import { loginRequest, userConnected } from "./login.js";
+
+import { getWorks, displayWorks, updateDisplay } from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   userConnected();
@@ -28,9 +23,7 @@ if (logoutBtn) {
 }
 
 // Code pour récupérer les travaux du BackEnd
-const worksApi = await fetch("http://localhost:5678/api/works");
-const works = await worksApi.json();
-
+const works = await getWorks();
 displayWorks(works);
 
 // Fonction pour mettre à jour l'affichage en fonction de la catégorie
@@ -43,7 +36,6 @@ await updateDisplay(null);
 await categoriesRequest();
 
 const editBtn = document.querySelector(".editBtn");
-
 // Ajouter un écouteur d'événements pour le clic sur Edit bouton et ouverture de la fenêtre modale
 editBtn.addEventListener("click", () => {
   const modalContainer = document.createElement("div");
@@ -73,7 +65,7 @@ editBtn.addEventListener("click", () => {
   const modalGallery = document.createElement("div");
   modalGallery.classList.add("modal__gallery");
 
-  const modalAddwork = document.createElement("div");
+  const modalAddwork = document.createElement("form");
   const addPicturecontainer = document.createElement("div");
 
   modalAddwork.classList.add("modal__addwork");
@@ -90,26 +82,47 @@ editBtn.addEventListener("click", () => {
   const addWork = document.createElement("input");
   addWork.type = "file";
   addWork.accept = ".jpg,.png";
-
+  
   const addPictureAccepted = document.createElement("p");
   addPictureAccepted.classList.add("add__picture__text");
   addPictureAccepted.innerText = "jpg, png : 4mo max";
 
   const labelTittle = document.createElement("label");
-  labelTittle.id = ("label__tittle");
+  labelTittle.id = "label__tittle";
   labelTittle.innerText = "Titre";
 
   const inputTittle = document.createElement("input");
   inputTittle.type = "Text";
-  inputTittle.id = ("input__tittle");
+  inputTittle.id = "input__tittle";
 
   const labelSelect = document.createElement("label");
-  labelSelect.id = ("label__select")
+  labelSelect.id = "label__select";
   labelSelect.innerText = "Catégorie";
-  
+
   const selectCategories = document.createElement("select");
   selectCategories.id = "select__categories";
-  
+
+  async function selectCategorie() {
+    // Récupérer les catégories via la fonction getCategories
+    const categories = await getCategories();
+
+    // Effacer toutes les options actuelles du select
+    selectCategories.innerHTML = "";
+
+    // Ajouter une option "" par défaut
+    selectCategories.add(new Option(""))
+
+    // Ajouter les catégories récupérées comme options
+    categories.forEach((category) => {
+      selectCategories.add(new Option(category.name, category.id));
+    });
+  }
+  // Appeler la fonction pour pré-remplir le menu déroulant au chargement de la page
+  selectCategorie();
+
+  // Ajouter un gestionnaire d'événements "click" pour mettre à jour les catégories
+  selectCategories.addEventListener("click", selectCategorie);
+
   
   modalAddwork.append(
     addPicturecontainer,
@@ -151,10 +164,10 @@ editBtn.addEventListener("click", () => {
   btnAddpicture.type = "submit";
   btnAddpicture.value = "Ajouter une photo";
   modalContent.appendChild(btnAddpicture);
-  
+
   //Ajout du bouton valider l'ajout d'une nouvelle photo caché par défaut
   const btnValid = document.createElement("input");
-  btnValid.id =("btn__valid");
+  btnValid.id = "btn__valid";
   btnValid.type = "submit";
   btnValid.value = "Valider";
   modalContent.appendChild(btnValid);
@@ -162,20 +175,19 @@ editBtn.addEventListener("click", () => {
 
   // Ajouter un addEventListener pour pouvoir ajouter un nouveau travail
   btnAddpicture.addEventListener("click", () => {
-    
     //Changement tu titre de la modale;
     modalTittle.innerHTML = "Ajout photo";
-    
+
     //Cacher le bouton Ajouter une photo au click sur le bouton ajouter une photo
-    btnAddpicture.style.display = "none"
-    
+    btnAddpicture.style.display = "none";
+
     //Cacher la gallerie au click sur le bouton ajouter
     modalGallery.style.display = "none";
     modalAddwork.style.display = "flex";
-    
+
     //Aficher le bouton valider grisé au click sur le bouton ajouter la photo
     btnValid.style.display = "block";
-    
+
     //Ajout du bouton retour pour fermer la modale
     const returnBtn = document.createElement("button");
     modalContent.appendChild(returnBtn);
