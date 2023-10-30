@@ -70,3 +70,4 @@ const adminPanel = () => {
     editBtn.appendChild(textPortfolio);
   }
 };
+

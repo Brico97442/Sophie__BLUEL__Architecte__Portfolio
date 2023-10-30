@@ -1,3 +1,4 @@
+//Requête fetch pour récupérer la réponse de l'api works  
 export const getWorks = async () => {
   const worksApi = await fetch("http://localhost:5678/api/works");
   const works = await worksApi.json();
@@ -6,7 +7,6 @@ export const getWorks = async () => {
 
 // Fonction pour afficher les œuvres dans la galerie
 const galleryElement = document.querySelector(".gallery");
-
 export const displayWorks = async (worksToDisplay) => {
   // Effacer le contenu actuel de la galerie
   galleryElement.innerHTML = "";
