@@ -1,26 +1,21 @@
-import { updateDisplay, 
-} from "./utils.js";
-
+import { updateDisplay } from "./utils.js";
 
 // Fonction pour récupérer les catégories via l'api
 export const getCategories = async () => {
   const categoriesApi = await fetch("http://localhost:5678/api/categories");
   const categories = await categoriesApi.json();
+  categories.unshift({ name: "Tous", categoryId: null });
+
   return categories;
 };
 
 // Fonction pour création et affichages des boutons catégories
-export const categoriesRequest = async () => {
-  //recupère les catégories via la requète fetch
-  const categories = await getCategories();
-
-  // Ajout de la catégorie "Tous" dans l'API catégories
-  categories.unshift({ name: "Tous", categoryId: null });
+export const displayCategories = async (categories) => {
   const filtersElement = document.getElementById("filters");
   const categoriesContainer = document.createElement("ul");
+  categoriesContainer.id = "categories__container";
   categoriesContainer.classList.add("center__row", "gap");
 
-  
   for (let i = 0; i < categories.length; i++) {
     const categoryLi = document.createElement("li");
     const categoryBtn = document.createElement("button");

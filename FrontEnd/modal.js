@@ -1,11 +1,9 @@
-import { getCategories } from "./category.js"
+import { getCategories } from "./category.js";
 import { getWorks } from "./utils.js";
-export const openModal = async() => {
+
+export const openModal = async () => {
   const modalContainer = document.createElement("div");
   modalContainer.classList.add("modal__container");
-
-  const body = document.querySelector("body");
-  body.appendChild(modalContainer);
 
   //Fermeture de la modale au clic à l'exterieur de la modal
   document.addEventListener(
@@ -17,6 +15,8 @@ export const openModal = async() => {
     },
     false
   );
+  const body = document.querySelector("body");
+  body.appendChild(modalContainer);
 
   //création de la modale
   const modalContent = document.createElement("div");
@@ -65,26 +65,19 @@ export const openModal = async() => {
   const selectCategories = document.createElement("select");
   selectCategories.id = "select__categories";
 
-  async function selectCategorie() {
-    // Récupérer les catégories via la fonction getCategories
-    const categories = await getCategories();
+  // Récupérer les catégories via la fonction getCategories
+  const categories = await getCategories();
 
-    // Effacer toutes les options actuelles du select
-    selectCategories.innerHTML = "";
+  // Effacer toutes les options actuelles du select
+  selectCategories.innerHTML = "";
 
-    // Ajouter une option "" par défaut
-    selectCategories.add(new Option(""));
+  // Ajouter une option "" par défaut
+  selectCategories.add(new Option(""));
 
-    // Ajouter les catégories récupérées comme options
-    categories.forEach((category) => {
-      selectCategories.add(new Option(category.name, category.id));
-    });
-  }
-  // Appeler la fonction pour pré-remplir le menu déroulant au chargement de la page
-  selectCategorie();
-
-  // Ajouter un gestionnaire d'événements "click" pour mettre à jour les catégories
-  selectCategories.addEventListener("click", selectCategorie);
+  // Ajouter les catégories récupérées comme options
+  categories.forEach((category) => {
+    selectCategories.add(new Option(category.name, category.id));
+  });
 
   modalAddwork.append(
     addPicturecontainer,
@@ -237,7 +230,7 @@ export const openModal = async() => {
       });
     }
   };
-  
+
   const works = await getWorks();
   //Appel de la fonction pour afficher les travaux dans la galerie modal
   modalWorks(works);

@@ -1,44 +1,39 @@
-import { categoriesRequest,  } from "./category.js";
+import { displayCategories, getCategories } from "./category.js";
 
-import { loginRequest, userConnected } from "./login.js";
+import { getWorks, displayWorks } from "./utils.js";
 
-import { getWorks, displayWorks, updateDisplay } from "./utils.js";
+import { displayAdminPanel } from "./login.js";
 
-import { openModal} from "./modal.js"
+import { openModal } from "./modal.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  userConnected();
+  const token = localStorage.getItem("userToken");
+
+  if (token) {
+    displayAdminPanel();
+  }
 });
 
-const form = document.getElementById("login__form");
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  loginRequest();
-});
-
+const loginBtn = document.getElementById("login__btn");
 const logoutBtn = document.getElementById("logout__btn");
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("userToken");
-    window.location.href = "login.html";
-  });
-}
+const filters = document.getElementById("filters");
 
-// Code pour récupérer les travaux du BackEnd
+logoutBtn.addEventListener("click", async () => {
+  localStorage.removeItem("userToken");
+  logoutBtn.style.display = "none";
+  loginBtn.style.display = "block";
+  editBtn[0].style.display = "none";
+  filters.style.visibility = "visible";
+});
+
 const works = await getWorks();
 displayWorks(works);
 
-// Fonction pour mettre à jour l'affichage en fonction de la catégorie
-updateDisplay();
-
-// Code pour afficher tous les objets par défaut
-await updateDisplay(null);
-
-// Récupération de la fonction categories request pour récuperer
-await categoriesRequest();
+const categories = await getCategories();
+await displayCategories(categories);
 
 const editBtn = document.querySelector(".editBtn");
 // Ajouter un écouteur d'événements pour le clic sur Edit bouton et ouverture de la fenêtre modale
-editBtn.addEventListener("click", () => {
-  openModal()
+editBtn.addEventListener ("click", () => {
+  openModal();
 });
