@@ -4,6 +4,8 @@ import { getWorks } from "./utils.js";
 export const openModal = async () => {
   const modalContainer = document.createElement("div");
   modalContainer.classList.add("modal__container");
+  const body = document.querySelector("body");
+  body.appendChild(modalContainer);
 
   //Fermeture de la modale au clic à l'exterieur de la modal
   document.addEventListener(
@@ -15,9 +17,7 @@ export const openModal = async () => {
     },
     false
   );
-  const body = document.querySelector("body");
-  body.appendChild(modalContainer);
-
+  
   //création de la modale
   const modalContent = document.createElement("div");
   modalContent.classList.add("modal");
@@ -29,10 +29,15 @@ export const openModal = async () => {
   modalGallery.classList.add("modal__gallery");
 
   const modalAddwork = document.createElement("form");
-  const addPicturecontainer = document.createElement("div");
-
   modalAddwork.classList.add("modal__addwork");
+  
+  const addPicturecontainer = document.createElement("div");
   addPicturecontainer.classList.add("add__picture__container");
+
+  //Ajout d'une zone preview pour l'aperçu de notre intput file
+  const preview = document.createElement("img");
+  preview.id ="preview";
+  preview.style.display ="none";
 
   //Ajout d'une input pour pouvoir ajouter une nouvelle photo
   const addPicturelabel = document.createElement("label");
@@ -41,14 +46,33 @@ export const openModal = async () => {
   const addPictureicon = document.createElement("i");
   addPictureicon.classList.add("far", "fa-image", "fa-5x");
   addPicturelabel.id = "addpicture";
-
+  
   const addWork = document.createElement("input");
+  addWork.id = "add__Work"
   addWork.type = "file";
   addWork.accept = ".jpg,.png";
-
+  
   const addPictureAccepted = document.createElement("p");
   addPictureAccepted.classList.add("add__picture__text");
   addPictureAccepted.innerText = "jpg, png : 4mo max";
+
+  const previewImg = () => {
+    const files = addWork.files;
+    if (files.length > 0) {
+      const ImgReader = new FileReader();
+      ImgReader.onload = function (event) {
+        document.getElementById("preview").setAttribute("src", event.target.result);
+        addPicturelabel.style.display ="none"
+        addPictureicon.style.display ="none"
+        addPictureAccepted.style.display ="none"
+        preview.style.display ="block";
+      };
+      ImgReader.readAsDataURL(files[0]);
+    }
+  };
+  
+  addWork.addEventListener("change", previewImg);
+
 
   const labelTittle = document.createElement("label");
   labelTittle.id = "label__tittle";
@@ -75,6 +99,7 @@ export const openModal = async () => {
   selectCategories.add(new Option(""));
 
   // Ajouter les catégories récupérées comme options
+  
   categories.forEach((category) => {
     selectCategories.add(new Option(category.name, category.id));
   });
@@ -88,6 +113,7 @@ export const openModal = async () => {
   );
 
   addPicturecontainer.append(
+    preview,
     addPictureicon,
     addPicturelabel,
     addPictureAccepted
@@ -153,13 +179,18 @@ export const openModal = async () => {
     returnIcons.classList.add("fas", "fa-arrow-left");
     returnBtn.appendChild(returnIcons);
 
-    // Ajouter un addEventListener pour pouvoir réafficher la gallerie au click
+    // Ajouter un addEventListener pour pouvoir réafficher la gallerie au click et réinitialiser l'aperçu afin d'afficher de nouveau les élements pour un nouveau travail
     returnBtn.addEventListener("click", () => {
       btnAddpicture.style.display = "block";
       btnValid.style.display = "none";
       returnBtn.style.display = "none";
       modalGallery.style.display = "grid";
       modalAddwork.style.display = "none";
+
+      addPicturelabel.style.display ="block"
+      addPictureicon.style.display ="block"
+      addPictureAccepted.style.display ="block"
+      preview.style.display ="none";
     });
   });
 
@@ -230,7 +261,7 @@ export const openModal = async () => {
       });
     }
   };
-
+  
   const works = await getWorks();
   //Appel de la fonction pour afficher les travaux dans la galerie modal
   modalWorks(works);
