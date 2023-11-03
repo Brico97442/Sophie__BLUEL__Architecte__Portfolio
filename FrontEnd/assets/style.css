@@ -178,11 +178,14 @@ li:hover {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
-	grid-row-gap: 20px;
+	grid-row-gap: 16px;
 }
 
 .gallery img {
 	width: 100%;
+	height: 100%;
+	max-height: 407px;
+	object-fit: cover;
 }
 
 #filters {
@@ -308,6 +311,10 @@ li:hover {
 	object-fit: cover;
 	width: 100%;
 	height: 100%;
+}
+
+#work__img {
+width: 100%;
 }
 
 .modal input {

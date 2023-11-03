@@ -1,5 +1,5 @@
 import { getCategories } from "./category.js";
-import { getWorks } from "./utils.js";
+import { updateDisplay, getWorks, displayWorks } from "./utils.js";
 
 export const openModal = async () => {
   const modalContainer = document.createElement("div");
@@ -17,7 +17,7 @@ export const openModal = async () => {
     },
     false
   );
-  
+
   //création de la modale
   const modalContent = document.createElement("div");
   modalContent.classList.add("modal");
@@ -30,49 +30,61 @@ export const openModal = async () => {
 
   const modalAddwork = document.createElement("form");
   modalAddwork.classList.add("modal__addwork");
-  
+
   const addPicturecontainer = document.createElement("div");
   addPicturecontainer.classList.add("add__picture__container");
 
   //Ajout d'une zone preview pour l'aperçu de notre intput file
   const preview = document.createElement("img");
-  preview.id ="preview";
-  preview.style.display ="none";
+  preview.id = "preview";
+  preview.style.display = "none";
 
   //Ajout d'une input pour pouvoir ajouter une nouvelle photo
   const addPicturelabel = document.createElement("label");
   addPicturelabel.innerText = "+ Ajouter photo";
-
   const addPictureicon = document.createElement("i");
   addPictureicon.classList.add("far", "fa-image", "fa-5x");
   addPicturelabel.id = "addpicture";
-  
+
   const addWork = document.createElement("input");
-  addWork.id = "add__Work"
+  addWork.id = "add__Work";
   addWork.type = "file";
   addWork.accept = ".jpg,.png";
-  
+
   const addPictureAccepted = document.createElement("p");
   addPictureAccepted.classList.add("add__picture__text");
   addPictureAccepted.innerText = "jpg, png : 4mo max";
+
+  //Ajout du bouton valider l'ajout d'une nouvelle photo caché par défaut
+  const btnValid = document.createElement("input");
+  btnValid.id = "btn__valid";
+  btnValid.type = "submit";
+  btnValid.value = "Valider";
+  btnValid.id = "btn__valid";
+  modalContent.appendChild(btnValid);
+  btnValid.style.display = "none";
+
+  const hrAddwork = document.createElement("hr");
+  const hrValidwork = document.createElement("hr");
 
   const previewImg = () => {
     const files = addWork.files;
     if (files.length > 0) {
       const ImgReader = new FileReader();
       ImgReader.onload = function (event) {
-        document.getElementById("preview").setAttribute("src", event.target.result);
-        addPicturelabel.style.display ="none"
-        addPictureicon.style.display ="none"
-        addPictureAccepted.style.display ="none"
-        preview.style.display ="block";
+        document
+          .getElementById("preview")
+          .setAttribute("src", event.target.result);
+        addPicturelabel.style.display = "none";
+        addPictureicon.style.display = "none";
+        addPictureAccepted.style.display = "none";
+        preview.style.display = "block";
       };
       ImgReader.readAsDataURL(files[0]);
     }
   };
-  
-  addWork.addEventListener("change", previewImg);
 
+  addWork.addEventListener("change", previewImg);
 
   const labelTittle = document.createElement("label");
   labelTittle.id = "label__tittle";
@@ -99,7 +111,7 @@ export const openModal = async () => {
   selectCategories.add(new Option(""));
 
   // Ajouter les catégories récupérées comme options
-  
+
   categories.forEach((category) => {
     selectCategories.add(new Option(category.name, category.id));
   });
@@ -109,7 +121,9 @@ export const openModal = async () => {
     labelTittle,
     inputTittle,
     labelSelect,
-    selectCategories
+    selectCategories,
+    hrValidwork,
+    btnValid
   );
 
   addPicturecontainer.append(
@@ -131,28 +145,16 @@ export const openModal = async () => {
   modalTittle.innerHTML = "Galerie photo";
 
   //Ancrage de la div modal__gallery à la div modal
-  modalContent.appendChild(modalGallery);
-
-  //Ancrage de la div modal__addwork à la div modal
-  modalContent.appendChild(modalAddwork);
+  modalContent.append(modalGallery, hrAddwork, modalAddwork);
 
   //Ajout de la barre de séparation de la fenêtre modal
-  const hr = document.createElement("hr");
-  modalContent.appendChild(hr);
+  // modalContent.appendChild(hr);
 
   //Ajout du bouton "Ajouter" de la fenêtre modale
   const btnAddpicture = document.createElement("input");
   btnAddpicture.type = "submit";
   btnAddpicture.value = "Ajouter une photo";
   modalContent.appendChild(btnAddpicture);
-
-  //Ajout du bouton valider l'ajout d'une nouvelle photo caché par défaut
-  const btnValid = document.createElement("input");
-  btnValid.id = "btn__valid";
-  btnValid.type = "submit";
-  btnValid.value = "Valider";
-  modalContent.appendChild(btnValid);
-  btnValid.style.display = "none";
 
   // Ajouter un addEventListener pour pouvoir ajouter un nouveau travail
   btnAddpicture.addEventListener("click", () => {
@@ -165,6 +167,8 @@ export const openModal = async () => {
     //Cacher la gallerie au click sur le bouton ajouter
     modalGallery.style.display = "none";
     modalAddwork.style.display = "flex";
+
+    hrAddwork.style.display = "none";
 
     //Aficher le bouton valider grisé au click sur le bouton ajouter la photo
     btnValid.style.display = "block";
@@ -187,10 +191,11 @@ export const openModal = async () => {
       modalGallery.style.display = "grid";
       modalAddwork.style.display = "none";
 
-      addPicturelabel.style.display ="block"
-      addPictureicon.style.display ="block"
-      addPictureAccepted.style.display ="block"
-      preview.style.display ="none";
+      addPicturelabel.style.display = "block";
+      addPictureicon.style.display = "block";
+      hrAddwork.style.display = "block";
+      addPictureAccepted.style.display = "block";
+      preview.style.display = "none";
     });
   });
 
@@ -234,7 +239,6 @@ export const openModal = async () => {
       picturesElement.style.position = "relative";
 
       const workId = worksToDisplay[i].id;
-
       // EventListener au click sur la corbeille pour supprimer un travail
       deleteBtn.addEventListener("click", async () => {
         const userToken = localStorage.getItem("userToken");
@@ -261,8 +265,53 @@ export const openModal = async () => {
       });
     }
   };
-  
+
   const works = await getWorks();
   //Appel de la fonction pour afficher les travaux dans la galerie modal
   modalWorks(works);
+  //Ajouter un addEventListener pour pouvoir valider un nouveau travail
+
+  modalAddwork.addEventListener("submit", (event) => {
+    event.preventDefault();
+    postWork(); // Appel de la fonction pour ajouter un nouveau travail
+  });
+};
+
+export const postWork = async () => {
+  const addWork = document.getElementById("add__Work");
+  const tittleValue = document.getElementById("input__tittle").value;
+  const selectValue = document.getElementById("select__categories").value;
+  const imageFile = addWork.files[0];
+
+  // Créez un objet FormData pour envoyer des données au serveur
+
+  const formData = new FormData();
+  formData.append("image", imageFile);
+  formData.append("title", tittleValue);
+  formData.append("category", selectValue);
+
+  const userToken = localStorage.getItem("userToken");
+  if (userToken) {
+    const responseAddwork = await fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${JSON.parse(userToken).token}`,
+      },
+      body: formData,
+    });
+
+    if (response.ok) {
+      // La requête a réussi, vous pouvez traiter la réponse si nécessaire
+      const newWork = await responseAddwork.json();
+      await displayWorks([works, ...newWork]);
+      // Réinitialisez les champs du formulaire
+      document.getElementById("input__tittle").value = "";
+      document.getElementById("select__categories").value = "";
+      document.getElementById("add__Work").value = "";
+      document.getElementById("preview").src = "";
+    } else {
+      // La requête a échoué
+      console.error("Échec de l'ajout du travail.");
+    }
+  }
 };

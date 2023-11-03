@@ -22,8 +22,10 @@ logoutBtn.addEventListener("click", async () => {
   localStorage.removeItem("userToken");
   logoutBtn.style.display = "none";
   loginBtn.style.display = "block";
-  editBtn[0].style.display = "none";
+  editBtn.style.display = "none";
   filters.style.visibility = "visible";
+  const userConnected = document.querySelector(".user__connected");
+  userConnected.remove();
 });
 
 const works = await getWorks();

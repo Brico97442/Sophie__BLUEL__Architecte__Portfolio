@@ -1,8 +1,20 @@
-//Requête fetch pour récupérer la réponse de l'api works  
+//Requête fetch pour récupérer la réponse de l'api works
 export const getWorks = async () => {
   const worksApi = await fetch("http://localhost:5678/api/works");
   const works = await worksApi.json();
   return works;
+};
+
+export const postWork = async () => {
+  const responseAddwork = await fetch("http://localhost:5678/api/works", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${JSON.parse(userToken).token}`,
+    },
+    body: formData,
+  });
+  const newWork = await responseAddwork.json();
+  return newWork;
 };
 
 // Fonction pour afficher les œuvres dans la galerie
@@ -13,6 +25,7 @@ export const displayWorks = async (worksToDisplay) => {
   for (let i = 0; i < worksToDisplay.length; i++) {
     const picturesElement = document.createElement("figure");
     const img = document.createElement("img");
+    img.id = "work__img"
     const figCaption = document.createElement("figcaption");
 
     img.src = worksToDisplay[i].imageUrl;
