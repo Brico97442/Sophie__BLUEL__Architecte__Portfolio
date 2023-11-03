@@ -31,8 +31,8 @@ const loginRequest = async () => {
 };
 
 export const displayAdminPanel = () => {
-  const logoutBtn = document.getElementById("logout__btn");
   const loginBtn = document.getElementById("login__btn");
+  loginBtn.innerText ="logout";
 
   const body = document.querySelector("body");
   const usersHeader = document.createElement("div");
@@ -48,8 +48,8 @@ export const displayAdminPanel = () => {
 
   const filters = document.getElementById("filters");
 
-  logoutBtn.style.display = "block";
-  loginBtn.style.display = "none";
+  
+  
   body.style.marginTop = "97px";
   filters.style.visibility = "hidden";
   const portfolio = document.getElementById("portfolio");

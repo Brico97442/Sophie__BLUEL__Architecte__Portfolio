@@ -242,6 +242,7 @@ export const openModal = async () => {
       // EventListener au click sur la corbeille pour supprimer un travail
       deleteBtn.addEventListener("click", async (event) => {
         event.preventDefault();
+        
         const userToken = localStorage.getItem("userToken");
 
         if (userToken) {
@@ -259,11 +260,14 @@ export const openModal = async () => {
 
           if (responseDelete.ok) {
             picturesElement.remove();
+            openModal();
             await updateDisplay("");
+            
           } else {
             console.error("Échec de la suppression du travail.");
           }
         }
+        openModal();
       });
     }
   };
@@ -275,8 +279,10 @@ export const openModal = async () => {
 
   modalAddwork.addEventListener("submit", (event) => {
     event.preventDefault();
-    postWork(); // Appel de la fonction pour ajouter un nouveau travail
+    postWork();
+     // Appel de la fonction pour ajouter un nouveau travail
   });
+  false
 };
 
 export const postWork = async () => {
