@@ -240,11 +240,13 @@ export const openModal = async () => {
 
       const workId = worksToDisplay[i].id;
       // EventListener au click sur la corbeille pour supprimer un travail
-      deleteBtn.addEventListener("click", async () => {
+      deleteBtn.addEventListener("click", async (event) => {
+        event.preventDefault();
         const userToken = localStorage.getItem("userToken");
 
         if (userToken) {
           const responseDelete = await fetch(
+
             `http://localhost:5678/api/works/${workId}`,
             {
               method: "DELETE",
@@ -257,7 +259,7 @@ export const openModal = async () => {
 
           if (responseDelete.ok) {
             picturesElement.remove();
-            await updateDisplay(null);
+            await updateDisplay("");
           } else {
             console.error("Échec de la suppression du travail.");
           }
@@ -301,9 +303,11 @@ export const postWork = async () => {
     });
 
     if (response.ok) {
+      mod
       // La requête a réussi, vous pouvez traiter la réponse si nécessaire
       const newWork = await responseAddwork.json();
-      await displayWorks([works, ...newWork]);
+      await displayWorks([newWork, ...works]);
+      
       // Réinitialisez les champs du formulaire
       document.getElementById("input__tittle").value = "";
       document.getElementById("select__categories").value = "";

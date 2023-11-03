@@ -40,7 +40,6 @@ export const displayWorks = async (worksToDisplay) => {
 // Fonction pour mettre à jour l'affichage en fonction de la catégorie
 export const updateDisplay = async (categoryId) => {
   const works = await getWorks();
-
   const worksToDisplay = categoryId
     ? works.filter((picture) => picture.categoryId === categoryId)
     : works;
