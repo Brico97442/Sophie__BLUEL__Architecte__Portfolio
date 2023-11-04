@@ -262,12 +262,12 @@ export const openModal = async () => {
             picturesElement.remove();
             openModal();
             await updateDisplay("");
+            window.location = openModal
             
           } else {
             console.error("Échec de la suppression du travail.");
           }
         }
-        openModal();
       });
     }
   };
@@ -282,7 +282,7 @@ export const openModal = async () => {
     postWork();
      // Appel de la fonction pour ajouter un nouveau travail
   });
-  false
+  
 };
 
 export const postWork = async () => {
