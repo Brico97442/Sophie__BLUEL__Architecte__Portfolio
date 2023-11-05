@@ -12,7 +12,7 @@ export const openModal = async () => {
     "click",
     function (event) {
       if (event.target.className === "modal__container") {
-        modalContainer.remove();
+        modalContainer.style.display = "none";
       }
     },
     false
@@ -185,12 +185,11 @@ export const openModal = async () => {
 
     // Ajouter un addEventListener pour pouvoir réafficher la gallerie au click et réinitialiser l'aperçu afin d'afficher de nouveau les élements pour un nouveau travail
     returnBtn.addEventListener("click", () => {
-      btnAddpicture.style.display = "block";
+      btnAddpicture.setAttribute("display","block")
       btnValid.style.display = "none";
       returnBtn.style.display = "none";
       modalGallery.style.display = "grid";
       modalAddwork.style.display = "none";
-
       addPicturelabel.style.display = "block";
       addPictureicon.style.display = "block";
       hrAddwork.style.display = "block";
@@ -280,6 +279,8 @@ export const openModal = async () => {
   modalAddwork.addEventListener("submit", (event) => {
     event.preventDefault();
     postWork();
+    modalContainer.style.display = "block";
+    openModal()
      // Appel de la fonction pour ajouter un nouveau travail
   });
   
@@ -292,7 +293,6 @@ export const postWork = async () => {
   const imageFile = addWork.files[0];
 
   // Créez un objet FormData pour envoyer des données au serveur
-
   const formData = new FormData();
   formData.append("image", imageFile);
   formData.append("title", tittleValue);
@@ -308,12 +308,11 @@ export const postWork = async () => {
       body: formData,
     });
 
-    if (response.ok) {
-      mod
+    if (responseAddwork.ok) {
       // La requête a réussi, vous pouvez traiter la réponse si nécessaire
       const newWork = await responseAddwork.json();
       await displayWorks([newWork, ...works]);
-      
+
       // Réinitialisez les champs du formulaire
       document.getElementById("input__tittle").value = "";
       document.getElementById("select__categories").value = "";
