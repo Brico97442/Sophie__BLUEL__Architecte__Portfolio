@@ -5,19 +5,10 @@ export const getWorks = async () => {
   return works;
 };
 
-export const postWork = async () => {
-  const responseAddwork = await fetch("http://localhost:5678/api/works", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${JSON.parse(userToken).token}`,
-    },
-    body: formData,
-  });
-  const newWork = await responseAddwork.json();
-  return newWork;
-};
+
 
 // Fonction pour afficher les œuvres dans la galerie
+
 const galleryElement = document.querySelector(".gallery");
 export const displayWorks = async (worksToDisplay) => {
   // Effacer le contenu actuel de la galerie
@@ -45,3 +36,5 @@ export const updateDisplay = async (categoryId) => {
     : works;
   displayWorks(worksToDisplay);
 };
+
+

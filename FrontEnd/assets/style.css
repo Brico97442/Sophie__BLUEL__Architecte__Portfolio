@@ -231,8 +231,21 @@ li:hover {
 	gap: 10px;
 }
 
-.hidden_class {
+.hidden{
 	display: none;
+}
+
+#addWork {
+	border: none;
+	font-family: 'Syne';
+	font-size: 14px;
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	width: 237px;
+	height: 36px;
+	margin: 2em auto;
+	border-radius: 60px;
 }
 
 .user__connected {
@@ -279,7 +292,7 @@ li:hover {
 .modal {
 	position: relative;
 	display: flex;
-	justify-content: center;
+	align-items: center;
 	flex-direction: column;
 	padding: 0 105px;
 	background-color: #ffff;
@@ -288,7 +301,6 @@ li:hover {
 }
 
 .modal h3 {
-	text-align: center;
 	font-size: 26px;
 	margin-top: 60px;
 }
@@ -322,9 +334,22 @@ width: 100%;
 	font-family: 'Syne';
 	font-size: 14px;
 	font-weight: normal;
+}
+
+#btnAddPicture{
+	border: none;
+	font-family: 'Syne';
+	font-size: 14px;
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
 	width: 237px;
 	height: 36px;
+	margin: 2em auto;
+	border-radius: 60px;
 }
+
+
 
 .modal__addwork {
 	display: flex;
@@ -369,10 +394,17 @@ width: 100%;
 	object-fit: cover;
 }
 
-#btn__valid {
+#btnValid {
 	background: #A7A7A7;
 	width: 237px;
+	height: 36px;
+	border: none;
+	font-family: 'Syne';
 	font-size: 14px;
+	font-weight: 700;
+	color: white;
+	margin: 2em auto;
+	border-radius: 60px;
 }
 
 
@@ -561,7 +593,6 @@ input[type="submit"] {
 	background-color: #1D6154;
 	margin: 2em auto;
 	width: 180px;
-	text-align: center;
 	border-radius: 60px;
 }
 
