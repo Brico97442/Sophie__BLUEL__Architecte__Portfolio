@@ -4,7 +4,7 @@ import { getWorks, displayWorks } from "./utils.js";
 
 import { displayAdminPanel } from "./login.js";
 
-import { createModalContainer,  createModal, createModalGallery, createModalAddWorkForm, createAddPictureContainer, } from "./modal.js";
+import { openModal,} from "./modal.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("userToken");
@@ -35,11 +35,5 @@ await displayCategories(categories);
 const editBtn = document.querySelector(".editBtn");
 // Ajouter un écouteur d'événements pour le clic sur Edit bouton et ouverture de la fenêtre modale
 editBtn.addEventListener ("click", () => {
-  
-  createModalContainer();
-  createModal();
-  createModalGallery();
-  createModalAddWorkForm();
-  createAddPictureContainer();
- 
+openModal()
 });

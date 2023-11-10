@@ -325,6 +325,10 @@ li:hover {
 	height: 100%;
 }
 
+.modal__gallery figure {
+position: relative;
+}
+
 #work__img {
 width: 100%;
 }
