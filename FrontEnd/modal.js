@@ -1,361 +1,109 @@
 // import { getCategories } from "./category.js";
-import { getWorks } from "./utils.js";
+import {
+  getWorks,
+  createModalContainer,
+  createModal,
+  createModalTitle,
+  createModalGallery,
+  createHrElement,
+  createButonAddPicture,
+  createButonCloseModal,
+  createButonReturn,
+  createModalAddWorkForm,
+  createAddPictureContainer,
+  createPreviewZoneImg,
+  createButtonAddPictureLabel,
+  createLabelTitle,
+  createInputTitle,
+  createLabelSelect,
+  createBtnValid,
+} from "./utils.js";
 
 export const openModal = async () => {
   const works = await getWorks();
-
   createModalContainer();
   createModal();
   createModalTitle();
-  createModalGallery(works); // Passer les travaux en argument
+  createModalGallery(works);
+  createModalAddWorkForm();
+  openAddpictureForm();
+  createHrElement();
   createButonAddPicture();
-  createButonReturn();
+  createBtnValid();
   createButonCloseModal();
+  createButonReturn();
   
-};
+  
+  const btnAddpicture = document.getElementById("btnAddPicture");
+  
+  btnAddpicture.addEventListener("click", () => {
+    
 
-const createModalContainer = () => {
-  const modalContainer = document.createElement("div");
-  modalContainer.classList.add("modal__container");
-  const body = document.querySelector("body");
-  body.appendChild(modalContainer);
-};
+    btnAddpicture.classList.add("hidden");
+    
+    const modalGallery = document.querySelector(".modal__gallery");
+    modalGallery.remove()
+    
+    const returnBtn = document.querySelector(".btn__return")
+    returnBtn.classList.remove("hidden")
 
-export const createModal = () => {
+    // const btnValid = document.getElementById("btnValid")
+
+    const modalAddwork = document.querySelector(".modal__addwork");
+    modalAddwork.classList.remove("hidden")
+  });
+
+  // Ajouter un écouteur d'événements pour la fermeture de la modale au click sur la croix
+  const closeModal = document.querySelector(".btn__closemodal")
   const modalContainer = document.querySelector(".modal__container");
-  const modal = document.createElement("div");
-  modal.classList.add("modal");
-  modalContainer.appendChild(modal);
-
-  //Fermeture de la modale au clic à l'exterieur de la modal
-  document.addEventListener(
-    "click",
-    function (event) {
-      if (event.target.className === "modal__container") {
-        modalContainer.remove();
-      }
-    },
-    false
-  );
-};
-
-const createModalTitle = () => {
-  const modal = document.querySelector(".modal");
-  const modalTittle = document.createElement("h3");
-  modal.appendChild(modalTittle);
-  modalTittle.innerHTML = "Galerie photo";
-  modal.appendChild(modalTittle);
-};
-
-// Ajout de la galerie des travaux dans la fenêtre modal
-export const createModalGallery = (works) => {
-  const modal = document.querySelector(".modal");
-  const modalGallery = document.createElement("div");
-  modalGallery.classList.add("modal__gallery");
-  modal.appendChild(modalGallery);
-  displayModalWorks(works);
-};
-
-const displayModalWorks = async (worksToDisplay) => {
-  const modalGallery = document.querySelector(".modal__gallery");
-  for (let i = 0; i < worksToDisplay.length; i++) {
-    const picturesElement = document.createElement("figure");
-    picturesElement.id = "picturesElement"
-    const img = document.createElement("img");
-    img.src = worksToDisplay[i].imageUrl;
-    img.alt = worksToDisplay[i].title;
-    modalGallery.appendChild(picturesElement);
-    picturesElement.append(img);
+  closeModal.addEventListener("click", (event) => {
     
-    createButonTrash(picturesElement);
+    event.preventDefault();
+    if (modalContainer) {
+      modalContainer.remove();
+    }
+  });
+  
+  
+  
+  const returnBtn = document.querySelector(".btn__return")
+  
+  // const modalGallery = document.querySelector(".modal__gallery")
+  const btnValid = document.getElementById("btnValid")
+  
+  
+  returnBtn.addEventListener("click", () => {
     
-  }
+    returnBtn.classList.add("hidden")
+    // modalAddwork.classList.add("hidden")
+    // modalGallery.classList.remove("hidden")    
+    btnAddpicture.classList.remove("hidden")
+    btnValid.classList.add("hidden")
+    
+  });
 };
 
-const createButonTrash = (picturesElement) => {
-  const deleteBtn = document.createElement("button");
-  deleteBtn.classList.add("delete__btn");
-  
-  const deleteIcon = document.createElement("i");
-  deleteIcon.classList.add("fas", "fa-trash-can");
-  
-  picturesElement.appendChild(deleteBtn);
-  deleteBtn.appendChild(deleteIcon);
-};
-
-
-const createButonAddPicture = () => {
-  const btnAddpicture = document.createElement("button");
-  btnAddpicture.id = "btnAddPicture";
-  btnAddpicture.type = "submit";
-  btnAddpicture.innerHTML = "Ajouter une photo";
-  const modal = document.querySelector(".modal");
-  modal.appendChild(btnAddpicture);
-};
-
-const createButonReturn = () => {
-  //  Ajout du bouton retour pour fermer la modale
-  const returnBtn = document.createElement("button");
-  const modal = document.querySelector(".modal");
-  modal.appendChild(returnBtn);
-  returnBtn.classList.add("btn__return");
-  // Ajout Icone left-Arrow pour la fermeture de la modale
-  const returnIcons = document.createElement("i");
-  returnIcons.classList.add("fas", "fa-arrow-left");
-  returnBtn.appendChild(returnIcons);
-};
-
-const createButonCloseModal = () => {
-  //Ajout du bouton close pour fermer la modale
-  const closeModal = document.createElement("button");
-  const modal = document.querySelector(".modal");
-  modal.appendChild(closeModal);
-  closeModal.classList.add("btn__closemodal");
-
-  //Ajout Icone x-mark pour la fermeture de la modale
-  const closeModalicons = document.createElement("i");
-  closeModalicons.classList.add("fas", "fa-xmark");
-  closeModal.appendChild(closeModalicons);
+const openAddpictureForm = () => {
+  createAddPictureContainer();
+  createPreviewZoneImg();
+  createButtonAddPictureLabel();
+  createLabelTitle();
+  createInputTitle();
+  createLabelSelect();
 };
 
 
 
-
-
-
-// export const createModalAddWorkForm = () => {
-//   const modal = document.querySelector(".modal");
-//   const modalAddwork = document.createElement("form");
-//   modalAddwork.classList.add("modal__addwork");
-//   modal.appendChild(modalAddwork);
-// };
-
-// export const createAddPictureContainer = () => {
-//   const addPicturecontainer = document.createElement("div");
-//   addPicturecontainer.classList.add("add__picture__container");
-// };
-
-// Ajout d'une zone preview pour l'aperçu de notre intput file
-// export const createPreviewZoneImg = () => {
-//   const preview = document.createElement("img");
-//   preview.id = "preview";
-//   preview.classList.add = "hidden";
-// };
-
-// export const createButtonAddPictureLabel = () => {
-//   const addPicturelabel = document.createElement("label");
-//   addPicturelabel.innerText = "+ Ajouter photo";
-//   const addPictureicon = document.createElement("i");
-//   addPictureicon.classList.add("far", "fa-image", "fa-5x");
-//   addPicturelabel.id = "addpicture";
-// };
-
-// export const createAddPictureInputFile = () => {
-//   //Ajout d'une input pour pouvoir ajouter une nouvelle photo
-//   const addWork = document.createElement("input");
-//   addWork.id = "add__Work";
-//   addWork.type = "file";
-//   addWork.accept = ".jpg,.png";
-// };
-
-// export const createAddPictureText = () => {
-//   const addPictureAccepted = document.createElement("p");
-//   addPictureAccepted.classList.add("add__picture__text");
-//   addPictureAccepted.innerText = "jpg, png : 4mo max";
-// };
-
-// export const createButtonValid = () => {
-//   //Ajout du bouton valider l'ajout d'une nouvelle photo caché par défaut
-//   const modal = document.querySelector(".modal");
-//   const btnValid = document.createElement("input");
-//   btnValid.id = "btnValid";
-//   btnValid.type = "submit";
-//   btnValid.value = "Valider";
-//   modal.appendChild(btnValid);
-//   btnValid.remove;
-// };
-
-// export const createHrElement = () => {
-//   const hrAddwork = document.createElement("hr");
-// };
-
-// export const createHrValidWorkElement = () => {
-//   const hrValidwork = document.createElement("hr");
-// };
-
-// export const previewImg = () => {
-//   const files = addWork.files;
-//   if (files.length > 0) {
-//     const ImgReader = new FileReader();
-//     ImgReader.onload = function (event) {
-//       document
-//         .getElementById("preview")
-//         .setAttribute("src", event.target.result);
-//       addPicturelabel.style.display = "none";
-//       addPictureicon.style.display = "none";
-//       addPictureAccepted.style.display = "none";
-//       preview.style.display = "block";
-//     };
-//     ImgReader.readAsDataURL(files[0]);
-//   }
-// };
-
-// export const createLabelTitle = () => {
-//   const labelTitle = document.createElement("label");
-//   labelTitle.id = "label__title";
-//   labelTitle.innerText = "Titre";
-// };
-
-// export const createInputTitle = () => {
-//   const inputTitle = document.createElement("input");
-//   inputTitle.type = "Text";
-//   inputTitle.id = "input__title";
-// };
-
-// export const createLabelSelect = () => {
-//   const labelSelect = document.createElement("label");
-//   labelSelect.id = "label__select";
-//   labelSelect.innerText = "Catégorie";
-// };
-// addWork.addEventListener("change", previewImg);
-
-// export const createSelectCategoriesElement = () => {
-//   const selectCategories = document.createElement("select");
-//   selectCategories.id = "select__categories";
-
-//   // Récupérer les catégories via la fonction getCategories
-//   // const categories = await getCategories();
-
-//   // Effacer toutes les options actuelles du select
-//   selectCategories.innerHTML = "";
-
-//   // Ajouter une option "" par défaut
-//   selectCategories.add(new Option(""));
-
-//   // Ajouter les catégories récupérées comme options
-
-//   categories.forEach((category) => {
-//     selectCategories.add(new Option(category.name, category.id));
-//   });
-// };
-
-// };
-// const modalAddwork = document.querySelector(".modal__addwork");
-// modalAddwork.append(
-//   addPicturecontainer,
-//   labelTitle,
-//   inputTitle,
-//   labelSelect,
-//   selectCategories,
-//   hrValidwork,
-//   btnValid
-// );
-
-// addPicturecontainer.append(
-//   preview,
-//   addPictureicon,
-//   addPicturelabel,
-//   addPictureAccepted
-// );
-
-// //Ancrage de l'input file au label
-
-// addPicturelabel.appendChild(addWork);
-
-//   //cacher la modaladdwork
-//   modalAddwork.style.display = "none";
-
-//
-
-//   //Ancrage de la div modal__gallery à la div modal
-//   modal.append(modalGallery, hrAddwork, modalAddwork);
-
-//   //Ajout de la barre de séparation de la fenêtre modal
-//   // modal.appendChild(hr);
-
-//   // Ajouter un addEventListener pour pouvoir ajouter un nouveau travail
-//   btnAddpicture.addEventListener("click", (event) => {
-//     event.preventDefault();
-//     event.stopPropagation();
-//     //Changement tu titre de la modale;
-//     modalTittle.innerHTML = "Ajout photo";
-
-//     //Cacher le bouton Ajouter une photo au click sur le bouton ajouter une photo
-//     btnAddpicture.style.display = "none";
-
-//     //Cacher la gallerie au click sur le bouton ajouter
-//     modalGallery.style.display = "none";
-//     modalAddwork.style.display = "flex";
-
-//     hrAddwork.style.display = "none";
-
-//     //Aficher le bouton valider grisé au click sur le bouton ajouter la photo
-//     btnValid.style.display = "block";
-
-
-//
 
 //     // Ajouter un addEventListener pour pouvoir réafficher la gallerie au click et réinitialiser l'aperçu afin d'afficher de nouveau les élements pour un nouveau travail
-//     returnBtn.addEventListener("click", () => {
-
-//       btnAddpicture.setAttribute("display", "block");
-//       btnValid.style.display = "none";
-//       returnBtn.style.display = "none";
-//       modalGallery.style.display = "grid";
-//       modalAddwork.style.display = "none";
-//       addPicturelabel.style.display = "block";
-//       addPictureicon.style.display = "block";
-//       hrAddwork.style.display = "block";
-//       addPictureAccepted.style.display = "block";
-//       preview.style.display = "none";
-//     });
-//   });
-
-
-
-//   // Ajouter un écouteur d'événements pour la fermeture de la modale au click sur la croix
-//   const modalContainer = document.querySelector(".modal__container")
-//   closeModal.addEventListener("click", (event) => {
-//     event.preventDefault()
-//     event.stopPropagation()
-//     if (modalContainer) {
-//       modalContainer.remove();
-//     }
+//    
 //   });
 
 //   // Ajouter d'une fonctions pour récuper les travaux existant
 
-
-
-//       const workId = worksToDisplay[i].id;
-
-//       // EventListener au click sur la corbeille pour supprimer un travail
-//       deleteBtn.addEventListener("click", async (event) => {
-//         event.preventDefault();
-//         event.stopPropagation()
-//         const userToken = localStorage.getItem("userToken");
-
-//         if (userToken) {
-//           const responseDelete = await fetch(
-//             `http://localhost:5678/api/works/${workId}`,
-//             {
-//               method: "DELETE",
-//               headers: {
-//                 "Content-Type": "application/json",
-//                 Authorization: `Bearer ${JSON.parse(userToken).token}`,
-//               },
-//             }
-//           );
-
-//           if (responseDelete.ok) {
-//             picturesElement.remove();
-//           } else {
-//             console.error("Échec de la suppression du travail.");
-//           }
-//         }
-//       });
-//     }
-//   };
+      
+    
+  
 
 //   const works = await getWorks();
 //   displayModalWorks(works);

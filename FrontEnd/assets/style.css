@@ -231,9 +231,19 @@ li:hover {
 	gap: 10px;
 }
 
-.hidden{
+.hidden {
 	display: none;
 }
+
+.flex {
+	display: flex;
+}
+
+.grid {
+display: grid;
+}
+
+
 
 #addWork {
 	border: none;
@@ -353,14 +363,12 @@ width: 100%;
 	border-radius: 60px;
 }
 
-
-
 .modal__addwork {
-	display: flex;
+	display: none;
 	flex-direction: column;
 }
 
-#label__tittle {
+#label__title {
 	margin-top: 30px;
 	color: #3D3D3D;
 	font-weight: 500;
@@ -372,7 +380,7 @@ width: 100%;
 	font-weight: 500;
 }
 
-.modal__addwork #input__tittle {
+.modal__addwork .input__title {
 	margin-top: 10px;
 	width: 420px;
 	height: 51px;
@@ -399,6 +407,8 @@ width: 100%;
 }
 
 #btnValid {
+	justify-content: center;
+	align-items: center;
 	background: #A7A7A7;
 	width: 237px;
 	height: 36px;
@@ -496,7 +506,7 @@ width: 100%;
 	display: none;
 }
 
-.add__picture__text {
+#addWorkText {
 	color: #444444;
 	font-size: 10px;
 	margin-top: 7px;

@@ -1,10 +1,10 @@
 import { displayCategories, getCategories } from "./category.js";
 
-import { getWorks, displayWorks } from "./utils.js";
+import { getWorks, displayWorks, } from "./utils.js";
 
 import { displayAdminPanel } from "./login.js";
 
-import { openModal,} from "./modal.js";
+import {  openModal, } from "./modal.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("userToken");
@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (token) {
     displayAdminPanel();
   }
+   
 });
 
 const loginBtn = document.getElementById("login__btn");
@@ -37,3 +38,10 @@ const editBtn = document.querySelector(".editBtn");
 editBtn.addEventListener ("click", () => {
 openModal()
 });
+
+
+
+
+
+
+
