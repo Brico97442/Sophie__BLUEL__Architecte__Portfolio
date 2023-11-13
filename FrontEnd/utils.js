@@ -150,6 +150,7 @@ export const createBtnValid = () => {
   btnValid.innerText = "Valider";
   btnValid.id = "btnValid";
   btnValid.classList.add("hidden");
+  btnValid.classList.add("btn__valid__unchecked")
   const modal = document.querySelector(".modal");
   modal.appendChild(btnValid);
 };
@@ -354,6 +355,21 @@ export const postWork = async () => {
 
 const checkFormValidity = () => {
   //si input length img value alors je chope le btn valider 
+  const addWork = document.getElementById("addWork");
+  const isImageSelected = addWork.files.length > 0;
 
+  const inputTitle = document.getElementById("inputTitle");
+  const isTitleFilled = inputTitle.value.trim() !== "";
+
+  const btnValid = document.getElementById("btnValid");
+
+  if (isImageSelected && isTitleFilled) {
+    btnValid.classList.add("btn__valid__checked");
+    console.log("tata");
+  } else {
+    btnValid.classList.remove("btn__valid__checked");
+    btnValid.classList.add("btn__valid__unchecked");
+    console.log("toto");
+  }
 
 }

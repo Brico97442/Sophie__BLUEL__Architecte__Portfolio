@@ -407,7 +407,6 @@ width: 100%;
 #btnValid {
 	justify-content: center;
 	align-items: center;
-	background: #A7A7A7;
 	width: 237px;
 	height: 36px;
 	border: none;
@@ -418,6 +417,26 @@ width: 100%;
 	margin: 2em auto;
 	border-radius: 60px;
 }
+
+.btn__valid__unchecked {
+	background: #A7A7A7;
+}
+
+.btn__valid__checked {
+	justify-content: center;
+	align-items: center;
+	background-color: #1D6154;
+	width: 237px;
+	height: 36px;
+	border: none;
+	font-family: 'Syne';
+	font-size: 14px;
+	font-weight: 700;
+	color: white;
+	margin: 2em auto;
+	border-radius: 60px;
+}
+
 
 
 .delete__btn {
