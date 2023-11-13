@@ -1,6 +1,9 @@
 //Requête fetch pour récupérer la réponse de l'api works
 import { getCategories } from "./category.js";
 
+let inputTitleValue
+let inputImgValue
+
 export const getWorks = async () => {
   const worksApi = await fetch("http://localhost:5678/api/works");
   const works = await worksApi.json();
@@ -75,6 +78,7 @@ export const createModalGallery = (works) => {
   const modal = document.querySelector(".modal");
   const modalGallery = document.createElement("div");
   modalGallery.classList.add("modal__gallery");
+  modalGallery.classList.add("grid");
   modal.appendChild(modalGallery);
   displayModalWorks(works);
 };
@@ -91,6 +95,33 @@ export const displayModalWorks = async (worksToDisplay) => {
     picturesElement.append(img);
 
     createButonTrash(picturesElement);
+
+    const deleteBtn = picturesElement.querySelector(".delete__btn");
+    const workId = worksToDisplay[i].id;
+
+    deleteBtn.addEventListener("click", async (event) => {
+      event.preventDefault();
+
+      const userToken = localStorage.getItem("userToken");
+      if (userToken) {
+        const responseDelete = await fetch(
+          `http://localhost:5678/api/works/${workId}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${JSON.parse(userToken).token}`,
+            },
+          }
+        );
+
+        if (responseDelete.ok) {
+          picturesElement.remove();
+        } else {
+          console.error("Échec de la suppression du travail.");
+        }
+      }
+    });
   }
 };
 
@@ -115,10 +146,10 @@ export const createButonAddPicture = () => {
 };
 
 export const createBtnValid = () => {
-  const btnValid = document.createElement("buttton");
+  const btnValid = document.createElement("button");
   btnValid.innerText = "Valider";
   btnValid.id = "btnValid";
-  btnValid.classList.add("hidden")
+  btnValid.classList.add("hidden");
   const modal = document.querySelector(".modal");
   modal.appendChild(btnValid);
 };
@@ -129,7 +160,7 @@ export const createButonReturn = () => {
   const modal = document.querySelector(".modal");
   modal.appendChild(returnBtn);
   returnBtn.classList.add("btn__return");
-  returnBtn.classList.add("hidden")
+  returnBtn.classList.add("hidden");
   // Ajout Icone left-Arrow pour la fermeture de la modale
   const returnIcons = document.createElement("i");
   returnIcons.classList.add("fas", "fa-arrow-left");
@@ -153,6 +184,7 @@ export const createModalAddWorkForm = () => {
   const modal = document.querySelector(".modal");
   const modalAddwork = document.createElement("div");
   modalAddwork.classList.add("modal__addwork");
+  modalAddwork.classList.add("hidden");
   modal.appendChild(modalAddwork);
 };
 
@@ -160,6 +192,7 @@ export const createAddPictureContainer = () => {
   const addPicturecontainer = document.createElement("div");
   addPicturecontainer.classList.add("add__picture__container");
   const modalAddwork = document.querySelector(".modal__addwork");
+
   modalAddwork.appendChild(addPicturecontainer);
 };
 
@@ -170,17 +203,6 @@ export const createHrElement = () => {
 };
 
 // Ajout d'une zone preview pour l'aperçu de notre intput file
-
-export const createPreviewZoneImg = () => {
-  const preview = document.createElement("img");
-  preview.id = "preview";
-  preview.classList.add("hidden");
-
-  const addPicturecontainer = document.querySelector(
-    ".add__picture__container"
-  );
-  addPicturecontainer.appendChild(preview);
-};
 
 export const createButtonAddPictureLabel = () => {
   const addPicturelabel = document.createElement("label");
@@ -205,42 +227,57 @@ export const createButtonAddPictureLabel = () => {
   );
   addPicturecontainer.append(addPictureicon, addPicturelabel, addWorkText);
   addPicturelabel.appendChild(addWork);
-
-  previewImg();
-  addWork.addEventListener("change", previewImg);
+  
+  // document.addEventListener("DOMContentLoaded", function () {
+  //   const addWork = document.getElementById("addWork");
+  //   if (addWork) {
+  //     addWork.addEventListener("change", previewImg);
+  //   } else {
+  //     console.error("L'élément avec l'ID 'addWork' n'a pas été trouvé.");
+  //   }
+  // });
 };
 
-const previewImg = () => {
-  const files = addWork.files;
-  if (files.length > 0) {
-    
-    const ImgReader = new FileReader();
+export const createPreviewZoneImg = () => {
+  const preview = document.createElement("img");
+  preview.id = "preview";
+  preview.classList.add("hidden");
 
+  const addPicturecontainer = document.querySelector(
+    ".add__picture__container"
+  );
+  addPicturecontainer.appendChild(preview);
+};
+
+export const previewImg = () => {
+  const addWork = document.getElementById("addWork");
+  const files = addWork.files;
+  inputImgValue = files;
+  checkFormValidity()
+  if (files.length > 0) {
+    const ImgReader = new FileReader();
+    ImgReader.readAsDataURL(files[0]);
     ImgReader.onload = function (event) {
-      document
-        .getElementById("preview")
-        .setAttribute("src", event.target.result);
+      document.getElementById("preview").setAttribute("src", event.target.result);
 
       const preview = document.getElementById("preview");
       preview.classList.remove("hidden");
 
       const addPicturelabel = document.getElementById("addPicturelabel");
-      addPicturelabel.remove();
+      addPicturelabel.classList.add("hidden");
 
       const addPictureicon = document.getElementById("addPictureicon");
       addPictureicon.remove();
 
       const addWorkText = document.getElementById("addWorkText");
-      addWorkText.remove()
+      addWorkText.remove();
     };
-
-    ImgReader.readAsDataURL(files[0]);
   }
 };
 
 export const createLabelTitle = () => {
   const labelTitle = document.createElement("label");
-  labelTitle.id = "label__title";
+  labelTitle.id = "labelTitle";
   labelTitle.innerText = "Titre";
   const modalAddwork = document.querySelector(".modal__addwork");
   modalAddwork.appendChild(labelTitle);
@@ -249,18 +286,23 @@ export const createLabelTitle = () => {
 export const createInputTitle = () => {
   const inputTitle = document.createElement("input");
   inputTitle.type = "Text";
-  inputTitle.classList.add("input__title");
+  inputTitle.id = "inputTitle";
   const modalAddwork = document.querySelector(".modal__addwork");
   modalAddwork.appendChild(inputTitle);
+  
+  inputTitle.addEventListener("change", (event) => {
+    inputTitleValue = event.target.value
+    checkFormValidity()
+  })
 };
 
 export const createLabelSelect = async () => {
   const labelSelect = document.createElement("label");
-  labelSelect.id = "label__select";
+  labelSelect.id = "labelSelect";
   labelSelect.innerText = "Catégorie";
 
   const selectCategories = document.createElement("select");
-  selectCategories.id = "select__categories";
+  selectCategories.id = "selectCategories";
 
   // Récupérer les catégories via la fonction getCategories
   const categories = await getCategories(); // Attendre la résolution de la promesse
@@ -275,3 +317,43 @@ export const createLabelSelect = async () => {
   const modalAddwork = document.querySelector(".modal__addwork");
   modalAddwork.append(labelSelect, selectCategories);
 };
+
+export const postWork = async () => {
+  const addWork = document.getElementById("addWork");
+  
+  const tittleValue = document.getElementById("inputTitle").value;
+  const selectValue = document.getElementById("selectCategories").value;
+  const imageFile = addWork.files[0];
+
+
+  // Créez un objet FormData pour envoyer des données au serveur
+  const formData = new FormData();
+  formData.append("image", imageFile);
+  formData.append("title", tittleValue);
+  formData.append("category", selectValue);
+
+  const userToken = localStorage.getItem("userToken");
+  if (userToken) {
+    const responseAddwork = await fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${JSON.parse(userToken).token}`,
+      },
+      body: formData,
+    });
+
+    if (responseAddwork.ok) {
+      const updatedWorks = await getWorks();
+      await displayWorks(updatedWorks);
+    } else {
+      // La requête a échoué
+      console.error("Échec de l'ajout du travail.");
+    }
+  }
+};
+
+const checkFormValidity = () => {
+  //si input length img value alors je chope le btn valider 
+
+
+}

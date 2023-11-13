@@ -31,16 +31,12 @@ const works = await getWorks();
 displayWorks(works);
 
 const categories = await getCategories();
-await displayCategories(categories);
+await displayCategories(categories); 
 
 const editBtn = document.querySelector(".editBtn");
-// Ajouter un écouteur d'événements pour le clic sur Edit bouton et ouverture de la fenêtre modale
 editBtn.addEventListener ("click", () => {
 openModal()
 });
-
-
-
 
 
 

@@ -1,4 +1,3 @@
-// import { getCategories } from "./category.js";
 import {
   getWorks,
   createModalContainer,
@@ -17,7 +16,19 @@ import {
   createInputTitle,
   createLabelSelect,
   createBtnValid,
+  postWork,
+  previewImg,
 } from "./utils.js";
+
+const openAddpictureForm = () => {
+  createButonReturn();
+  createAddPictureContainer();
+  createPreviewZoneImg();
+  createButtonAddPictureLabel();
+  createLabelTitle();
+  createInputTitle();
+  createLabelSelect();
+};
 
 export const openModal = async () => {
   const works = await getWorks();
@@ -31,118 +42,63 @@ export const openModal = async () => {
   createButonAddPicture();
   createBtnValid();
   createButonCloseModal();
-  createButonReturn();
-  
-  
+
   const btnAddpicture = document.getElementById("btnAddPicture");
-  
+  const returnBtn = document.querySelector(".btn__return");
+  const modalAddwork = document.querySelector(".modal__addwork");
+  const modalGallery = document.querySelector(".modal__gallery");
+  const btnValid = document.getElementById("btnValid");
+
   btnAddpicture.addEventListener("click", () => {
-    
-
     btnAddpicture.classList.add("hidden");
-    
-    const modalGallery = document.querySelector(".modal__gallery");
-    modalGallery.remove()
-    
-    const returnBtn = document.querySelector(".btn__return")
-    returnBtn.classList.remove("hidden")
 
-    // const btnValid = document.getElementById("btnValid")
+    const modalGallery = document.querySelector(".modal__gallery");
+    modalGallery.classList.remove("grid");
+    modalGallery.classList.add("hidden");
+
+    const returnBtn = document.querySelector(".btn__return");
+    returnBtn.classList.remove("hidden");
+
+    const btnValid = document.getElementById("btnValid");
+    btnValid.classList.remove("hidden");
+    btnValid.classList.add("flex");
 
     const modalAddwork = document.querySelector(".modal__addwork");
-    modalAddwork.classList.remove("hidden")
+    modalAddwork.classList.remove("hidden");
+    modalAddwork.classList.add("flex");
   });
 
   // Ajouter un écouteur d'événements pour la fermeture de la modale au click sur la croix
-  const closeModal = document.querySelector(".btn__closemodal")
+  const closeModal = document.querySelector(".btn__closemodal");
   const modalContainer = document.querySelector(".modal__container");
   closeModal.addEventListener("click", (event) => {
-    
     event.preventDefault();
     if (modalContainer) {
       modalContainer.remove();
     }
   });
-  
-  
-  
-  const returnBtn = document.querySelector(".btn__return")
-  
-  // const modalGallery = document.querySelector(".modal__gallery")
-  const btnValid = document.getElementById("btnValid")
-  
-  
+
   returnBtn.addEventListener("click", () => {
-    
-    returnBtn.classList.add("hidden")
-    // modalAddwork.classList.add("hidden")
-    // modalGallery.classList.remove("hidden")    
-    btnAddpicture.classList.remove("hidden")
-    btnValid.classList.add("hidden")
-    
+    returnBtn.classList.add("hidden");
+    modalAddwork.classList.remove("flex");
+    modalAddwork.classList.add("hidden");
+    modalGallery.classList.remove("hidden");
+    modalGallery.classList.add("grid");
+    btnAddpicture.classList.remove("hidden");
+    btnValid.classList.remove("flex");
+    btnValid.classList.add("hidden");
   });
+
+  btnValid.addEventListener("click", () => {
+    postWork();
+  });
+
+  const addWork = document.getElementById("addWork");
+  if (addWork) {
+    addWork.addEventListener("change", () => {
+      previewImg()
+    });
+  } else {
+    console.error("L'élément avec l'ID 'addWork' n'a pas été trouvé.");
+  }
 };
-
-const openAddpictureForm = () => {
-  createAddPictureContainer();
-  createPreviewZoneImg();
-  createButtonAddPictureLabel();
-  createLabelTitle();
-  createInputTitle();
-  createLabelSelect();
-};
-
-
-
-
-//     // Ajouter un addEventListener pour pouvoir réafficher la gallerie au click et réinitialiser l'aperçu afin d'afficher de nouveau les élements pour un nouveau travail
-//    
-//   });
-
-//   // Ajouter d'une fonctions pour récuper les travaux existant
-
-      
-    
-  
-
-//   const works = await getWorks();
-//   displayModalWorks(works);
-
-//   modalAddwork.addEventListener("submit", (event) => {
-//     event.preventDefault();
-//     event.stopPropagation()
-//     postWork();
-//   });
-// // };
-
-// export const postWork = async () => {
-//   const addWork = document.getElementById("add__Work");
-//   const tittleValue = document.getElementById("input__tittle").value;
-//   const selectValue = document.getElementById("select__categories").value;
-//   const imageFile = addWork.files[0];
-
-//   // Créez un objet FormData pour envoyer des données au serveur
-//   const formData = new FormData();
-//   formData.append("image", imageFile);
-//   formData.append("title", tittleValue);
-//   formData.append("category", selectValue);
-
-//   const userToken = localStorage.getItem("userToken");
-//   if (userToken) {
-//     const responseAddwork = await fetch("http://localhost:5678/api/works", {
-//       method: "POST",
-//       headers: {
-//         Authorization: `Bearer ${JSON.parse(userToken).token}`,
-//       },
-//       body: formData,
-//     });
-
-//     if (responseAddwork.ok) {
-//       // La requête a réussi, vous pouvez traiter la réponse si nécessaire
-//       const newWork = await responseAddwork.json();
-//       await displayWorks([newWork, ...works]);
-//     } else {
-//       // La requête a échoué
-//       console.error("Échec de l'ajout du travail.");
-//     }
-//   }
