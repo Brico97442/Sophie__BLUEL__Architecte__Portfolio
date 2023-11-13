@@ -308,7 +308,7 @@ export const createLabelSelect = async () => {
   // Récupérer les catégories via la fonction getCategories
   const categories = await getCategories(); // Attendre la résolution de la promesse
 
-  // selectCategories.innerHTML = "";
+  selectCategories.innerHTML = "";
   selectCategories.add(new Option(""));
 
   categories.forEach((category) => {
@@ -344,8 +344,17 @@ export const postWork = async () => {
     });
 
     if (responseAddwork.ok) {
+      
       const updatedWorks = await getWorks();
       await displayWorks(updatedWorks);
+      
+      const modalAddwork = document.querySelector(".modal__addwork"); 
+      const modalGallery = document.querySelector(".modal__gallery");
+
+      modalAddwork.remove()
+      modalGallery.classList.remove("hidden")
+      modalGallery.classList.add("grid")
+
     } else {
       // La requête a échoué
       console.error("Échec de l'ajout du travail.");
@@ -354,22 +363,28 @@ export const postWork = async () => {
 };
 
 const checkFormValidity = () => {
-  //si input length img value alors je chope le btn valider 
+
   const addWork = document.getElementById("addWork");
-  const isImageSelected = addWork.files.length > 0;
+  const ImageSelected = addWork.files.length > 0;
 
   const inputTitle = document.getElementById("inputTitle");
-  const isTitleFilled = inputTitle.value.trim() !== "";
+  const TitleFilled = inputTitle.value.trim() !== "";
+  
+  const selectCategories = document.getElementById("selectCategories");
+  const isCategorySelected = selectCategories.value !== "";
+  console.log(isCategorySelected)
 
   const btnValid = document.getElementById("btnValid");
 
-  if (isImageSelected && isTitleFilled) {
+  if (ImageSelected && TitleFilled && isCategorySelected) {
+    
     btnValid.classList.add("btn__valid__checked");
-    console.log("tata");
+   
   } else {
+    
     btnValid.classList.remove("btn__valid__checked");
     btnValid.classList.add("btn__valid__unchecked");
-    console.log("toto");
+    
   }
 
 }
