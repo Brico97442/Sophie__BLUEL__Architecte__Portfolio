@@ -1,8 +1,8 @@
 //Requête fetch pour récupérer la réponse de l'api works
 import { getCategories } from "./category.js";
 
-let inputTitleValue
-let inputImgValue
+let inputTitleValue;
+let inputImgValue;
 
 export const getWorks = async () => {
   const worksApi = await fetch("http://localhost:5678/api/works");
@@ -68,6 +68,7 @@ export const createModal = () => {
 export const createModalTitle = () => {
   const modal = document.querySelector(".modal");
   const modalTittle = document.createElement("h3");
+  modalTittle.id = "modalTittle"
   modal.appendChild(modalTittle);
   modalTittle.innerHTML = "Galerie photo";
   modal.appendChild(modalTittle);
@@ -85,6 +86,7 @@ export const createModalGallery = (works) => {
 
 export const displayModalWorks = async (worksToDisplay) => {
   const modalGallery = document.querySelector(".modal__gallery");
+  modalGallery.innerHTML = "";
   for (let i = 0; i < worksToDisplay.length; i++) {
     const picturesElement = document.createElement("figure");
     picturesElement.id = "picturesElement";
@@ -117,6 +119,8 @@ export const displayModalWorks = async (worksToDisplay) => {
 
         if (responseDelete.ok) {
           picturesElement.remove();
+          const works = await getWorks();
+          displayWorks(works);
         } else {
           console.error("Échec de la suppression du travail.");
         }
@@ -150,7 +154,7 @@ export const createBtnValid = () => {
   btnValid.innerText = "Valider";
   btnValid.id = "btnValid";
   btnValid.classList.add("hidden");
-  btnValid.classList.add("btn__valid__unchecked")
+  btnValid.classList.add("btn__valid__unchecked");
   const modal = document.querySelector(".modal");
   modal.appendChild(btnValid);
 };
@@ -213,6 +217,7 @@ export const createButtonAddPictureLabel = () => {
   const addPictureicon = document.createElement("i");
   addPictureicon.id = "addPictureicon";
   addPictureicon.classList.add("far", "fa-image", "fa-5x");
+  addPictureicon.classList.add("flex")
 
   const addWork = document.createElement("input");
   addWork.id = "addWork";
@@ -228,15 +233,7 @@ export const createButtonAddPictureLabel = () => {
   );
   addPicturecontainer.append(addPictureicon, addPicturelabel, addWorkText);
   addPicturelabel.appendChild(addWork);
-  
-  // document.addEventListener("DOMContentLoaded", function () {
-  //   const addWork = document.getElementById("addWork");
-  //   if (addWork) {
-  //     addWork.addEventListener("change", previewImg);
-  //   } else {
-  //     console.error("L'élément avec l'ID 'addWork' n'a pas été trouvé.");
-  //   }
-  // });
+
 };
 
 export const createPreviewZoneImg = () => {
@@ -254,12 +251,15 @@ export const previewImg = () => {
   const addWork = document.getElementById("addWork");
   const files = addWork.files;
   inputImgValue = files;
-  checkFormValidity()
+  checkFormValidity();
+  
   if (files.length > 0) {
     const ImgReader = new FileReader();
     ImgReader.readAsDataURL(files[0]);
     ImgReader.onload = function (event) {
-      document.getElementById("preview").setAttribute("src", event.target.result);
+      document
+        .getElementById("preview")
+        .setAttribute("src", event.target.result);
 
       const preview = document.getElementById("preview");
       preview.classList.remove("hidden");
@@ -268,10 +268,11 @@ export const previewImg = () => {
       addPicturelabel.classList.add("hidden");
 
       const addPictureicon = document.getElementById("addPictureicon");
-      addPictureicon.remove();
+      addPictureicon.classList.remove("flex")
+      addPictureicon.classList.add("hidden");
 
       const addWorkText = document.getElementById("addWorkText");
-      addWorkText.remove();
+      addWorkText.classList.add("hidden");
     };
   }
 };
@@ -290,11 +291,11 @@ export const createInputTitle = () => {
   inputTitle.id = "inputTitle";
   const modalAddwork = document.querySelector(".modal__addwork");
   modalAddwork.appendChild(inputTitle);
-  
+
   inputTitle.addEventListener("change", (event) => {
-    inputTitleValue = event.target.value
-    checkFormValidity()
-  })
+    inputTitleValue = event.target.value;
+    checkFormValidity();
+  });
 };
 
 export const createLabelSelect = async () => {
@@ -317,15 +318,16 @@ export const createLabelSelect = async () => {
 
   const modalAddwork = document.querySelector(".modal__addwork");
   modalAddwork.append(labelSelect, selectCategories);
+
+  
 };
 
 export const postWork = async () => {
   const addWork = document.getElementById("addWork");
-  
+
   const tittleValue = document.getElementById("inputTitle").value;
   const selectValue = document.getElementById("selectCategories").value;
   const imageFile = addWork.files[0];
-
 
   // Créez un objet FormData pour envoyer des données au serveur
   const formData = new FormData();
@@ -345,16 +347,37 @@ export const postWork = async () => {
 
     if (responseAddwork.ok) {
       
-      const updatedWorks = await getWorks();
-      await displayWorks(updatedWorks);
+      inputTitle.value = "";
+      selectCategories.value = "";
+      preview.src =""
       
-      const modalAddwork = document.querySelector(".modal__addwork"); 
+      preview.classList.add("hidden")
+      addPicturelabel.classList.remove("hidden")
+
+      const addPictureicon = document.getElementById("addPictureicon");
+      addPictureicon.classList.remove("hidden");
+
+      const addWorkText = document.getElementById("addWorkText");
+      addWorkText.classList.remove("hidden");
+      
+      
+      // preview.classList.add("hidden")
+
+
+      const modalAddwork = document.querySelector(".modal__addwork");
       const modalGallery = document.querySelector(".modal__gallery");
+      
+      modalAddwork.classList.remove("flex")
+      modalAddwork.classList.add("hidden");
 
-      modalAddwork.remove()
-      modalGallery.classList.remove("hidden")
-      modalGallery.classList.add("grid")
-
+      modalGallery.classList.remove("hidden");
+      modalGallery.classList.add("grid");
+      
+      const updatedWorks = await getWorks();
+      
+      await displayWorks(updatedWorks);
+      await displayModalWorks(updatedWorks);
+      
     } else {
       // La requête a échoué
       console.error("Échec de l'ajout du travail.");
@@ -363,28 +386,24 @@ export const postWork = async () => {
 };
 
 const checkFormValidity = () => {
-
   const addWork = document.getElementById("addWork");
   const ImageSelected = addWork.files.length > 0;
 
   const inputTitle = document.getElementById("inputTitle");
-  const TitleFilled = inputTitle.value.trim() !== "";
-  
+  const TitleFilled = inputTitle.value !== "";
+
+
   const selectCategories = document.getElementById("selectCategories");
   const isCategorySelected = selectCategories.value !== "";
-  console.log(isCategorySelected)
+  
 
   const btnValid = document.getElementById("btnValid");
 
   if (ImageSelected && TitleFilled && isCategorySelected) {
-    
+    btnValid.classList.remove("btn__valid__unchecked");
     btnValid.classList.add("btn__valid__checked");
-   
   } else {
-    
     btnValid.classList.remove("btn__valid__checked");
     btnValid.classList.add("btn__valid__unchecked");
-    
   }
-
-}
+};

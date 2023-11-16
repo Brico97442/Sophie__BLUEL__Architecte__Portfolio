@@ -48,29 +48,34 @@ export const openModal = async () => {
   const modalAddwork = document.querySelector(".modal__addwork");
   const modalGallery = document.querySelector(".modal__gallery");
   const btnValid = document.getElementById("btnValid");
-
-  btnAddpicture.addEventListener("click", () => {
-    btnAddpicture.classList.add("hidden");
-
-    const modalGallery = document.querySelector(".modal__gallery");
-    modalGallery.classList.remove("grid");
-    modalGallery.classList.add("hidden");
-
-    const returnBtn = document.querySelector(".btn__return");
-    returnBtn.classList.remove("hidden");
-
-    const btnValid = document.getElementById("btnValid");
-    btnValid.classList.remove("hidden");
-    btnValid.classList.add("flex");
-
-    const modalAddwork = document.querySelector(".modal__addwork");
-    modalAddwork.classList.remove("hidden");
-    modalAddwork.classList.add("flex");
-  });
+  const modalContainer = document.querySelector(".modal__container");
+  const modalTittle = document.getElementById("modalTittle")
+  
+  if (btnAddpicture){
+    btnAddpicture.addEventListener("click", () => {
+      
+      btnAddpicture.classList.add("hidden");
+      
+      modalTittle.innerText = "Ajouter une photo"
+      
+      modalGallery.classList.remove("grid");
+      modalGallery.classList.add("hidden");
+  
+      const returnBtn = document.querySelector(".btn__return");
+      returnBtn.classList.remove("hidden");
+  
+      btnValid.classList.remove("hidden");
+      btnValid.classList.add("flex");
+  
+     
+      modalAddwork.classList.remove("hidden");
+      modalAddwork.classList.add("flex");
+    });
+  }
 
   // Ajouter un écouteur d'événements pour la fermeture de la modale au click sur la croix
   const closeModal = document.querySelector(".btn__closemodal");
-  const modalContainer = document.querySelector(".modal__container");
+  
   closeModal.addEventListener("click", (event) => {
     event.preventDefault();
     if (modalContainer) {
@@ -87,10 +92,14 @@ export const openModal = async () => {
     btnAddpicture.classList.remove("hidden");
     btnValid.classList.remove("flex");
     btnValid.classList.add("hidden");
+    modalTittle.innerText = "Galerie photo"
   });
 
   btnValid.addEventListener("click", () => {
     postWork();
+    btnAddpicture.classList.remove("hidden")
+    btnValid.classList.remove("flex")
+    btnValid.classList.add("hidden")
   });
 
   const addWork = document.getElementById("addWork");
