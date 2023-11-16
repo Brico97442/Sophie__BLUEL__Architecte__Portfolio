@@ -68,7 +68,7 @@ export const createModal = () => {
 export const createModalTitle = () => {
   const modal = document.querySelector(".modal");
   const modalTittle = document.createElement("h3");
-  modalTittle.id = "modalTittle"
+  modalTittle.id = "modalTittle";
   modal.appendChild(modalTittle);
   modalTittle.innerHTML = "Galerie photo";
   modal.appendChild(modalTittle);
@@ -217,7 +217,7 @@ export const createButtonAddPictureLabel = () => {
   const addPictureicon = document.createElement("i");
   addPictureicon.id = "addPictureicon";
   addPictureicon.classList.add("far", "fa-image", "fa-5x");
-  addPictureicon.classList.add("flex")
+  addPictureicon.classList.add("flex");
 
   const addWork = document.createElement("input");
   addWork.id = "addWork";
@@ -233,7 +233,6 @@ export const createButtonAddPictureLabel = () => {
   );
   addPicturecontainer.append(addPictureicon, addPicturelabel, addWorkText);
   addPicturelabel.appendChild(addWork);
-
 };
 
 export const createPreviewZoneImg = () => {
@@ -251,8 +250,7 @@ export const previewImg = () => {
   const addWork = document.getElementById("addWork");
   const files = addWork.files;
   inputImgValue = files;
-  
-  
+
   if (files.length > 0) {
     const ImgReader = new FileReader();
     ImgReader.readAsDataURL(files[0]);
@@ -268,7 +266,7 @@ export const previewImg = () => {
       addPicturelabel.classList.add("hidden");
 
       const addPictureicon = document.getElementById("addPictureicon");
-      addPictureicon.classList.remove("flex")
+      addPictureicon.classList.remove("flex");
       addPictureicon.classList.add("hidden");
 
       const addWorkText = document.getElementById("addWorkText");
@@ -276,7 +274,6 @@ export const previewImg = () => {
 
       checkFormValidity();
     };
-
   }
 };
 
@@ -328,13 +325,11 @@ export const createLabelSelect = async () => {
 };
 
 export const postWork = async () => {
-  
   const addWork = document.getElementById("addWork");
-  
+
   const imageFile = addWork.files[0];
   const tittleValue = document.getElementById("inputTitle").value;
   const selectValue = document.getElementById("selectCategories").value;
-  
 
   // Créez un objet FormData pour envoyer des données au serveur
   const formData = new FormData();
@@ -354,40 +349,37 @@ export const postWork = async () => {
 
     if (responseAddwork.ok) {
       
-      preview.src =""
+      preview.src = "";
       inputTitle.value = "";
       selectCategories.value = "";
+
+      preview.classList.add("hidden");
       
-      
-      preview.classList.add("hidden")
-      addPicturelabel.classList.remove("hidden")
+      addPicturelabel.classList.remove("hidden");
 
       const addPictureicon = document.getElementById("addPictureicon");
       addPictureicon.classList.remove("hidden");
 
       const addWorkText = document.getElementById("addWorkText");
       addWorkText.classList.remove("hidden");
-      
-      
-      // preview.classList.add("hidden")
-
 
       const modalAddwork = document.querySelector(".modal__addwork");
       const modalGallery = document.querySelector(".modal__gallery");
-      
-      modalAddwork.classList.remove("flex")
+
+      btnValid.remove;
+      // btnValid.classList.add("btn__valid__unchecked");
+
+      modalAddwork.classList.remove("flex");
       modalAddwork.classList.add("hidden");
 
       modalGallery.classList.remove("hidden");
       modalGallery.classList.add("grid");
-      
+
       const updatedWorks = await getWorks();
-      
+
       await displayWorks(updatedWorks);
       await displayModalWorks(updatedWorks);
-      
     } else {
-      // La requête a échoué
       console.error("Échec de l'ajout du travail.");
     }
   }
@@ -400,18 +392,10 @@ const checkFormValidity = () => {
   const inputTitle = document.getElementById("inputTitle");
   const TitleFilled = inputTitle.value.length > 0;
 
-
   const selectCategories = document.getElementById("selectCategories");
   const isCategorySelected = selectCategories.value !== "";
-  
 
   const btnValid = document.getElementById("btnValid");
-
-
-  console.log("ImageSelected:", ImageSelected);
-  console.log("TitleFilled:", TitleFilled);
-  console.log("isCategorySelected:", isCategorySelected)
-
 
   if (ImageSelected && TitleFilled && isCategorySelected) {
     btnValid.classList.remove("btn__valid__unchecked");
