@@ -251,7 +251,7 @@ export const previewImg = () => {
   const addWork = document.getElementById("addWork");
   const files = addWork.files;
   inputImgValue = files;
-  checkFormValidity();
+  
   
   if (files.length > 0) {
     const ImgReader = new FileReader();
@@ -273,7 +273,10 @@ export const previewImg = () => {
 
       const addWorkText = document.getElementById("addWorkText");
       addWorkText.classList.add("hidden");
+
+      checkFormValidity();
     };
+
   }
 };
 
@@ -319,15 +322,19 @@ export const createLabelSelect = async () => {
   const modalAddwork = document.querySelector(".modal__addwork");
   modalAddwork.append(labelSelect, selectCategories);
 
-  
+  selectCategories.addEventListener("change", () => {
+    checkFormValidity();
+  });
 };
 
 export const postWork = async () => {
+  
   const addWork = document.getElementById("addWork");
-
+  
+  const imageFile = addWork.files[0];
   const tittleValue = document.getElementById("inputTitle").value;
   const selectValue = document.getElementById("selectCategories").value;
-  const imageFile = addWork.files[0];
+  
 
   // Créez un objet FormData pour envoyer des données au serveur
   const formData = new FormData();
@@ -347,9 +354,10 @@ export const postWork = async () => {
 
     if (responseAddwork.ok) {
       
+      preview.src =""
       inputTitle.value = "";
       selectCategories.value = "";
-      preview.src =""
+      
       
       preview.classList.add("hidden")
       addPicturelabel.classList.remove("hidden")
@@ -390,7 +398,7 @@ const checkFormValidity = () => {
   const ImageSelected = addWork.files.length > 0;
 
   const inputTitle = document.getElementById("inputTitle");
-  const TitleFilled = inputTitle.value !== "";
+  const TitleFilled = inputTitle.value.length > 0;
 
 
   const selectCategories = document.getElementById("selectCategories");
@@ -398,6 +406,12 @@ const checkFormValidity = () => {
   
 
   const btnValid = document.getElementById("btnValid");
+
+
+  console.log("ImageSelected:", ImageSelected);
+  console.log("TitleFilled:", TitleFilled);
+  console.log("isCategorySelected:", isCategorySelected)
+
 
   if (ImageSelected && TitleFilled && isCategorySelected) {
     btnValid.classList.remove("btn__valid__unchecked");
