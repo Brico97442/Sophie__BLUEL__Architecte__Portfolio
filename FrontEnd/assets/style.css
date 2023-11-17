@@ -239,7 +239,7 @@ li:hover {
 }
 
 .grid {
-display: grid;
+	display: grid;
 }
 
 
@@ -309,6 +309,10 @@ display: grid;
 	width: 420px;
 }
 
+.modal-open {
+	overflow: hidden;
+}
+
 .modal h3 {
 	font-size: 26px;
 	margin-top: 60px;
@@ -334,11 +338,11 @@ display: grid;
 }
 
 .modal__gallery figure {
-position: relative;
+	position: relative;
 }
 
 #work__img {
-width: 100%;
+	width: 100%;
 }
 
 .modal input {
@@ -348,7 +352,7 @@ width: 100%;
 	font-weight: normal;
 }
 
-#btnAddPicture{
+#btnAddPicture {
 	border: none;
 	font-family: 'Syne';
 	font-size: 14px;
@@ -392,7 +396,7 @@ width: 100%;
 	box-shadow: 0px 14px 14px 0px rgba(0, 0, 0, 0.09);
 }
 
- #selectCategories::before {
+#selectCategories::before {
 	width: 420px;
 	height: 51px;
 }
@@ -422,18 +426,9 @@ width: 100%;
 }
 
 .btn__valid__checked {
-	justify-content: center;
-	align-items: center;
+
 	background-color: #1D6154;
-	width: 237px;
-	height: 36px;
-	border: none;
-	font-family: 'Syne';
-	font-size: 14px;
-	font-weight: 700;
-	color: white;
-	margin: 2em auto;
-	border-radius: 60px;
+
 }
 
 

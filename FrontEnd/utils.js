@@ -59,6 +59,7 @@ export const createModal = () => {
     function (event) {
       if (event.target.className === "modal__container") {
         modalContainer.remove();
+        document.body.classList.remove("modal-open");
       }
     },
     false
@@ -155,6 +156,7 @@ export const createBtnValid = () => {
   btnValid.id = "btnValid";
   btnValid.classList.add("hidden");
   btnValid.classList.add("btn__valid__unchecked");
+  btnValid.setAttribute ('disabled','disabled')
   const modal = document.querySelector(".modal");
   modal.appendChild(btnValid);
 };
@@ -348,13 +350,11 @@ export const postWork = async () => {
     });
 
     if (responseAddwork.ok) {
-      
       preview.src = "";
       inputTitle.value = "";
       selectCategories.value = "";
 
       preview.classList.add("hidden");
-      
       addPicturelabel.classList.remove("hidden");
 
       const addPictureicon = document.getElementById("addPictureicon");
@@ -365,9 +365,10 @@ export const postWork = async () => {
 
       const modalAddwork = document.querySelector(".modal__addwork");
       const modalGallery = document.querySelector(".modal__gallery");
-
-      btnValid.remove;
-      // btnValid.classList.add("btn__valid__unchecked");
+      
+      btnValid.classList.add("btn__valid__unchecked");
+      btnValid.classList.remove("btn__valid__checked");
+      btnValid.setAttribute ('disabled','disabled')
 
       modalAddwork.classList.remove("flex");
       modalAddwork.classList.add("hidden");
@@ -400,8 +401,11 @@ const checkFormValidity = () => {
   if (ImageSelected && TitleFilled && isCategorySelected) {
     btnValid.classList.remove("btn__valid__unchecked");
     btnValid.classList.add("btn__valid__checked");
+    btnValid.removeAttribute ('disabled')
   } else {
     btnValid.classList.remove("btn__valid__checked");
     btnValid.classList.add("btn__valid__unchecked");
+    btnValid.setAttribute ('disabled','disabled')
+    
   }
 };

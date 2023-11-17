@@ -18,6 +18,7 @@ import {
   createBtnValid,
   postWork,
   previewImg,
+  
 } from "./utils.js";
 
 const openAddpictureForm = () => {
@@ -31,6 +32,7 @@ const openAddpictureForm = () => {
 };
 
 export const openModal = async () => {
+
   const works = await getWorks();
   createModalContainer();
   createModal();
@@ -50,6 +52,8 @@ export const openModal = async () => {
   const btnValid = document.getElementById("btnValid");
   const modalContainer = document.querySelector(".modal__container");
   const modalTittle = document.getElementById("modalTittle");
+
+  document.body.classList.add("modal-open");
 
   if (btnAddpicture) {
     btnAddpicture.addEventListener("click", () => {
@@ -80,6 +84,7 @@ export const openModal = async () => {
     event.preventDefault();
     if (modalContainer) {
       modalContainer.remove();
+      document.body.classList.remove("modal-open");
     }
   });
 
@@ -110,10 +115,12 @@ export const openModal = async () => {
   });
 
   btnValid.addEventListener("click", () => {
+    
     postWork();
     btnAddpicture.classList.remove("hidden");
     btnValid.classList.remove("flex");
     btnValid.classList.add("hidden");
+    
   });
 
   const addWork = document.getElementById("addWork");
