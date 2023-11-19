@@ -157,7 +157,7 @@ export const createLabelSelect = async () => {
 
   // Récupérer les catégories via la fonction getCategories
   const categories = await getCategories(); // Attendre la résolution de la promesse
-
+  categories.shift({ name: "Tous", categoryId: null });
   selectCategories.innerHTML = "";
   selectCategories.add(new Option(""));
 
