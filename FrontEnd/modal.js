@@ -1,25 +1,28 @@
 import {
   getWorks,
-  createModalContainer,
-  createModal,
-  createModalTitle,
   createModalGallery,
-  createHrElement,
-  createButonAddPicture,
-  createButonCloseModal,
-  createButonReturn,
-  createModalAddWorkForm,
-  createAddPictureContainer,
-  createPreviewZoneImg,
-  createButtonAddPictureLabel,
   createLabelTitle,
   createInputTitle,
   createLabelSelect,
-  createBtnValid,
   postWork,
   previewImg,
-  
 } from "./utils.js";
+
+import {
+  createModalContainer,
+  createModal,
+  createModalTitle,
+  createButonAddPicture,
+  createButonReturn,
+  createBtnValid,
+  createButonCloseModal,
+  createAddPictureContainer,
+  createHrElement,
+  createModalAddWorkForm,
+  createButtonAddPictureLabel,
+  createPreviewZoneImg,
+  
+} from "./modalLayers.js";
 
 const openAddpictureForm = () => {
   createButonReturn();
@@ -32,7 +35,6 @@ const openAddpictureForm = () => {
 };
 
 export const openModal = async () => {
-
   const works = await getWorks();
   createModalContainer();
   createModal();
@@ -115,12 +117,10 @@ export const openModal = async () => {
   });
 
   btnValid.addEventListener("click", () => {
-    
     postWork();
     btnAddpicture.classList.remove("hidden");
     btnValid.classList.remove("flex");
     btnValid.classList.add("hidden");
-    
   });
 
   const addWork = document.getElementById("addWork");
