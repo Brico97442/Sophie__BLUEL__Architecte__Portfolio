@@ -212,7 +212,12 @@ export const postWork = async () => {
 
       const modalAddwork = document.querySelector(".modal__addwork");
       const modalGallery = document.querySelector(".modal__gallery");
-
+      
+      modalTittle.innerText = "Galerie photo";
+      
+      const returnBtn = document.querySelector(".btn__return");
+      returnBtn.classList.add("hidden");
+      
       btnValid.classList.add("btn__valid__unchecked");
       btnValid.classList.remove("btn__valid__checked");
       btnValid.setAttribute("disabled", "disabled");
