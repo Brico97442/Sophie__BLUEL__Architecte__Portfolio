@@ -177,14 +177,14 @@ export const postWork = async () => {
   const addWork = document.getElementById("addWork");
 
   const imageFile = addWork.files[0];
-  const tittleValue = document.getElementById("inputTitle").value;
-  const selectValue = document.getElementById("selectCategories").value;
+  const inputTitle = document.getElementById("inputTitle");
+  const selectValue = document.getElementById("selectCategories");
 
   // Créez un objet FormData pour envoyer des données au serveur
   const formData = new FormData();
   formData.append("image", imageFile);
-  formData.append("title", tittleValue);
-  formData.append("category", selectValue);
+  formData.append("title", inputTitle.value);
+  formData.append("category", selectValue.value);
 
   const userToken = localStorage.getItem("userToken");
   if (userToken) {
@@ -197,9 +197,10 @@ export const postWork = async () => {
     });
 
     if (responseAddwork.ok) {
-      preview.src = "";
+      
+      addWork.value = "";
       inputTitle.value = "";
-      selectCategories.value = "";
+      selectValue.selectedIndex = -1;
 
       preview.classList.add("hidden");
       addPicturelabel.classList.remove("hidden");
@@ -212,14 +213,14 @@ export const postWork = async () => {
 
       const modalAddwork = document.querySelector(".modal__addwork");
       const modalGallery = document.querySelector(".modal__gallery");
-      
+
       modalTittle.innerText = "Galerie photo";
-      
+
       const returnBtn = document.querySelector(".btn__return");
       returnBtn.classList.add("hidden");
-      
-      btnValid.classList.add("btn__valid__unchecked");
-      btnValid.classList.remove("btn__valid__checked");
+
+      btnValid.classList.add("btn__valid--unchecked");
+      btnValid.classList.remove("btn__valid--checked");
       btnValid.setAttribute("disabled", "disabled");
 
       modalAddwork.classList.remove("flex");
@@ -243,20 +244,23 @@ const checkFormValidity = () => {
   const ImageSelected = addWork.files.length > 0;
 
   const inputTitle = document.getElementById("inputTitle");
-  const TitleFilled = inputTitle.value.length > 0;
+  const TitleFilled = !!inputTitle.value;
 
   const selectCategories = document.getElementById("selectCategories");
-  const isCategorySelected = selectCategories.value !== "";
+  const isCategorySelected = !!selectCategories.value;
 
   const btnValid = document.getElementById("btnValid");
+  console.log(ImageSelected);
+  console.log(TitleFilled);
+  console.log(isCategorySelected);
 
   if (ImageSelected && TitleFilled && isCategorySelected) {
-    btnValid.classList.remove("btn__valid__unchecked");
-    btnValid.classList.add("btn__valid__checked");
+    btnValid.classList.remove("btn__valid--unchecked");
+    btnValid.classList.add("btn__valid--checked");
     btnValid.removeAttribute("disabled");
   } else {
-    btnValid.classList.remove("btn__valid__checked");
-    btnValid.classList.add("btn__valid__unchecked");
-    btnValid.setAttribute("disabled", "disabled");
+    btnValid.classList.remove("btn__valid--checked");
+    btnValid.classList.add("btn__valid--unchecked");
+    btnValid.setAttribute("disabled", "true");
   }
 };

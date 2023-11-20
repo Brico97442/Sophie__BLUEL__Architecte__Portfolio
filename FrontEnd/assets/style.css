@@ -32,6 +32,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
 	line-height: 1;
+	background-color:#FFFEF8;
 }
 
 ol, ul {
@@ -135,6 +136,7 @@ li:hover {
 	align-items: center;
 	margin: auto;
 	max-width: 950px;
+	background-color:#FFFEF8;
 }
 
 #introduction figure {
@@ -169,6 +171,7 @@ li:hover {
 
 #portfolio {
 	position: relative;
+	background-color:#FFFEF8;
 }
 
 .gallery {
@@ -426,11 +429,11 @@ li:hover {
 	border-radius: 60px;
 }
 
-.btn__valid__unchecked {
+.btn__valid--unchecked {
 	background: #A7A7A7;
 }
 
-.btn__valid__checked {
+.btn__valid--checked {
 
 	background-color: #1D6154;
 
@@ -537,6 +540,7 @@ li:hover {
 	margin: auto;
 	text-align: center;
 	margin-bottom: 355px;
+	background-color:#FFFEF8;
 }
 
 #login>* {
@@ -580,6 +584,7 @@ li:hover {
 #contact {
 	width: 50%;
 	margin: auto;
+	background-color:#FFFEF8;
 }
 
 #contact>* {
@@ -627,6 +632,7 @@ input[type="submit"] {
 
 footer {
 	height: 60px;
+	background-color:#FFFFFF;
 }
 
 footer nav ul {

@@ -47,7 +47,7 @@ export const createBtnValid = () => {
   btnValid.innerText = "Valider";
   btnValid.id = "btnValid";
   btnValid.classList.add("hidden");
-  btnValid.classList.add("btn__valid__unchecked");
+  btnValid.classList.add("btn__valid--unchecked");
   btnValid.setAttribute("disabled", "disabled");
   const modal = document.querySelector(".modal");
   modal.appendChild(btnValid);
