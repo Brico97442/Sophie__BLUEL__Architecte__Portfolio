@@ -208,6 +208,11 @@ li:hover {
 	color: #ffff;
 }
 
+.btn__style__all {
+	background: #1D6154;
+	color: #ffff;
+}
+
 .btn__style:focus {
 	background: #1D6154;
 	color: #ffff;

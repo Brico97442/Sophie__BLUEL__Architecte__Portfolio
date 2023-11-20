@@ -101,12 +101,11 @@ export const openModal = async () => {
     btnValid.classList.add("hidden");
     modalTittle.innerText = "Galerie photo";
 
-    preview.src = "";
+    preview.value = "";
     inputTitle.value = "";
     selectCategories.value = "";
 
     preview.classList.add("hidden");
-
     addPicturelabel.classList.remove("hidden");
 
     const addPictureicon = document.getElementById("addPictureicon");

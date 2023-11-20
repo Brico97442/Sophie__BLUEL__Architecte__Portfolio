@@ -14,11 +14,17 @@ export const displayCategories = async (categories) => {
   const categoriesContainer = document.createElement("ul");
   categoriesContainer.id = "categories__container";
   categoriesContainer.classList.add("center__row", "gap");
-
+  let selectedCategoryId = null;
   for (let i = 0; i < categories.length; i++) {
     const categoryLi = document.createElement("li");
     const categoryBtn = document.createElement("button");
     const categoryId = categories[i].id;
+
+    if (categoryId == null) {
+      categoryBtn.classList.add("btn__style__all");
+      selectedCategoryId = null;
+    }
+    
     categoryBtn.innerHTML = categories[i].name;
 
     categoryLi.appendChild(categoryBtn);
@@ -30,6 +36,12 @@ export const displayCategories = async (categories) => {
 
     // Ajouter un écouteur d'événements pour le clic sur chaque bouton de catégorie
     categoryLi.addEventListener("click", () => {
+      
+      const btnAllSelectedDefault = document.querySelector(".btn__style__all");
+      
+      if (btnAllSelectedDefault) {
+        btnAllSelectedDefault.classList.remove("btn__style__all");
+      }
       updateDisplay(categoryId);
     });
   }
