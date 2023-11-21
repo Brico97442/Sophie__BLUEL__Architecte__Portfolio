@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
 const loginBtn = document.getElementById("login__btn");
 const filters = document.getElementById("filters");
 
+
+
 loginBtn.addEventListener("click", async () => {
   localStorage.removeItem("userToken");
   loginBtn.style.display = "block";
@@ -33,7 +35,7 @@ displayWorks(works);
 const categories = await getCategories();
 await displayCategories(categories); 
 
-const editBtn = document.querySelector(".editBtn");
+const editBtn = document.getElementById("editBtn");
 editBtn.addEventListener ("click", () => {
 openModal()
 });

@@ -55,8 +55,7 @@ export const displayAdminPanel = () => {
   const createEditButton = () =>{
     const portfolio = document.getElementById("portfolio");
     const editBtn = document.createElement("button");
-    editBtn.classList.add("editBtn");
-    editBtn.id = "edit__btn";
+    editBtn.id = "editBtn";
     portfolio.appendChild(editBtn);
     const editIconBtn = document.createElement("i");
     const editTextBtn = document.createElement("p");
