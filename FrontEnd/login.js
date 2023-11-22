@@ -1,4 +1,4 @@
-const form = document.getElementById("login__form");
+const form = document.getElementById("loginForm");
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   postLogin();
@@ -31,14 +31,15 @@ const postLogin = async () => {
 };
 
 export const displayAdminPanel = () => {
-  const loginBtn = document.getElementById("login__btn");
-  loginBtn.innerText ="logout";
+  
+  const loginBtn = document.getElementById("loginBtn");
+  loginBtn.innerText = "logout";
 
   const body = document.querySelector("body");
   const userBanner = document.createElement("div");
   userBanner.classList.add("user__connected");
   body.appendChild(userBanner);
-  
+
   const createEditionIcon = () => {
     const icon = document.createElement("i");
     const textIcon = document.createElement("p");
@@ -50,19 +51,20 @@ export const displayAdminPanel = () => {
     body.style.marginTop = "97px";
     filters.style.visibility = "hidden";
   };
-  createEditionIcon()
- 
-  const createEditButton = () =>{
+  createEditionIcon();
+
+  const createEditButton = () => {
     const portfolio = document.getElementById("portfolio");
     const editBtn = document.createElement("button");
     editBtn.id = "editBtn";
+
     portfolio.appendChild(editBtn);
     const editIconBtn = document.createElement("i");
     const editTextBtn = document.createElement("p");
     editTextBtn.innerHTML = "Modifier";
     editIconBtn.classList.add("fa-regular", "fa-pen-to-square");
     editBtn.appendChild(editIconBtn);
-    editBtn.appendChild(editTextBtn)
+    editBtn.appendChild(editTextBtn);
   };
-  createEditButton()
+  createEditButton();
 };

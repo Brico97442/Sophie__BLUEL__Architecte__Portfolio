@@ -10,9 +10,12 @@ export const getCategories = async () => {
 
 // Fonction pour création et affichages des boutons catégories
 export const displayCategories = async (categories) => {
+  
   const filtersElement = document.getElementById("filters");
   const categoriesContainer = document.createElement("ul");
-  categoriesContainer.id = "categories__container";
+  categoriesContainer.id = "categoriesContainer";
+
+
   categoriesContainer.classList.add("center__row", "gap");
   let selectedCategoryId = null;
   for (let i = 0; i < categories.length; i++) {
@@ -26,7 +29,6 @@ export const displayCategories = async (categories) => {
     }
     
     categoryBtn.innerHTML = categories[i].name;
-
     categoryLi.appendChild(categoryBtn);
     categoriesContainer.appendChild(categoryLi);
     filtersElement.appendChild(categoriesContainer);
