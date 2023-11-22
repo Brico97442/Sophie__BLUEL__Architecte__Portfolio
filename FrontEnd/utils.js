@@ -152,23 +152,23 @@ export const createLabelSelect = async () => {
   labelSelect.id = "labelSelect";
   labelSelect.innerText = "Catégorie";
 
-  const selectCategories = document.createElement("select");
-  selectCategories.id = "selectCategories";
+  const inputCategories = document.createElement("select");
+  inputCategories.id = "inputCategories";
 
   // Récupérer les catégories via la fonction getCategories
   const categories = await getCategories(); // Attendre la résolution de la promesse
   categories.shift({ name: "Tous", categoryId: null });
-  selectCategories.innerHTML = "";
-  selectCategories.add(new Option(""));
+  inputCategories.innerHTML = "";
+  inputCategories.add(new Option(""));
 
   categories.forEach((category) => {
-    selectCategories.add(new Option(category.name, category.id));
+    inputCategories.add(new Option(category.name, category.id));
   });
 
   const modalAddwork = document.querySelector(".modal__addwork");
-  modalAddwork.append(labelSelect, selectCategories);
+  modalAddwork.append(labelSelect, inputCategories);
 
-  selectCategories.addEventListener("change", () => {
+  inputCategories.addEventListener("change", () => {
     checkFormValidity();
   });
 };
@@ -178,13 +178,13 @@ export const postWork = async () => {
 
   const imageFile = addWork.files[0];
   const inputTitle = document.getElementById("inputTitle");
-  const selectValue = document.getElementById("selectCategories");
+  const inputCategories = document.getElementById("inputCategories");
 
   // Créez un objet FormData pour envoyer des données au serveur
   const formData = new FormData();
   formData.append("image", imageFile);
   formData.append("title", inputTitle.value);
-  formData.append("category", selectValue.value);
+  formData.append("category", inputCategories.value);
 
   const userToken = localStorage.getItem("userToken");
   if (userToken) {
@@ -200,7 +200,7 @@ export const postWork = async () => {
       
       addWork.value = "";
       inputTitle.value = "";
-      selectValue.selectedIndex = -1;
+      inputCategories.selectedIndex = -1;
 
       preview.classList.add("hidden");
       addPicturelabel.classList.remove("hidden");
@@ -246,8 +246,8 @@ const checkFormValidity = () => {
   const inputTitle = document.getElementById("inputTitle");
   const TitleFilled = !!inputTitle.value;
 
-  const selectCategories = document.getElementById("selectCategories");
-  const isCategorySelected = !!selectCategories.value;
+  const inputCategories = document.getElementById("inputCategories");
+  const isCategorySelected = !!inputCategories.value;
 
   const btnValid = document.getElementById("btnValid");
   console.log(ImageSelected);

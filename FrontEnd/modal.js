@@ -105,11 +105,11 @@ export const openModal = async () => {
     modalTittle.innerText = "Galerie photo";
 
 
-    const selectCategories = document.getElementById("selectCategories")
+    const inputCategories = document.getElementById("inputCategories")
     
     addWork.value = "";
     inputTitle.value = ""; 
-    selectCategories.selectedIndex = -1;
+    inputCategories.selectedIndex = -1;
 
     preview.classList.add("hidden");
     addPicturelabel.classList.remove("hidden");
