@@ -26,11 +26,11 @@ export const createModal = () => {
 
 export const createModalTitle = () => {
   const modal = document.querySelector(".modal");
-  const modalTittle = document.createElement("h3");
-  modalTittle.id = "modalTittle";
-  modal.appendChild(modalTittle);
-  modalTittle.innerHTML = "Galerie photo";
-  modal.appendChild(modalTittle);
+  const modalTitle = document.createElement("h3");
+  modalTitle.id = "modalTitle";
+  modal.appendChild(modalTitle);
+  modalTitle.innerHTML = "Galerie photo";
+  modal.appendChild(modalTitle);
 };
 
 export const createButonAddPicture = () => {

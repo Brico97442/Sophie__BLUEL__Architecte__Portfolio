@@ -53,7 +53,7 @@ export const openModal = async () => {
   const modalGallery = document.querySelector(".modal__gallery");
   const btnValid = document.getElementById("btnValid");
   const modalContainer = document.querySelector(".modal__container");
-  const modalTittle = document.getElementById("modalTittle");
+  const modalTitle = document.getElementById("modalTitle");
   const addWork = document.getElementById("addWork");
   const inputTitle = document.getElementById("inputTitle")
  
@@ -64,7 +64,7 @@ export const openModal = async () => {
     btnAddpicture.addEventListener("click", () => {
       btnAddpicture.classList.add("hidden");
 
-      modalTittle.innerText = "Ajouter une photo";
+      modalTitle.innerText = "Ajouter une photo";
 
       modalGallery.classList.remove("grid");
       modalGallery.classList.add("hidden");
@@ -72,7 +72,7 @@ export const openModal = async () => {
       const returnBtn = document.querySelector(".btn__return");
       returnBtn.classList.remove("hidden");
 
-      // btnValid.classList.remove("hidden");
+
       btnValid.classList.add("flex");
       btnValid.classList.remove("btn__valid--checked");
       btnValid.classList.add("btn__valid--unchecked");
@@ -102,7 +102,7 @@ export const openModal = async () => {
     btnAddpicture.classList.remove("hidden");
     btnValid.classList.remove("flex");
     btnValid.classList.add("hidden");
-    modalTittle.innerText = "Galerie photo";
+    modalTitle.innerText = "Galerie photo";
 
 
     const inputCategories = document.getElementById("inputCategories")

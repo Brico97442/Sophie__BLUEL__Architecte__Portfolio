@@ -214,7 +214,7 @@ export const postWork = async () => {
       const modalAddwork = document.querySelector(".modal__addwork");
       const modalGallery = document.querySelector(".modal__gallery");
 
-      modalTittle.innerText = "Galerie photo";
+      modalTitle.innerText = "Galerie photo";
 
       const returnBtn = document.querySelector(".btn__return");
       returnBtn.classList.add("hidden");
