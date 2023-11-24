@@ -3,7 +3,7 @@ import {
   createModalGallery,
   createLabelTitle,
   createInputTitle,
-  createLabelSelect,
+  createInputSelect,
   postWork,
   previewImg,
 } from "./utils.js";
@@ -25,13 +25,14 @@ import {
 } from "./modalLayers.js";
 
 const openAddpictureForm = () => {
+  createModalAddWorkForm();
   createButonReturn();
   createAddPictureContainer();
   createPreviewZoneImg();
   createButtonAddPictureLabel();
   createLabelTitle();
   createInputTitle();
-  createLabelSelect();
+  createInputSelect();
 };
 
 export const openModal = async () => {
@@ -40,7 +41,6 @@ export const openModal = async () => {
   createModal();
   createModalTitle();
   createModalGallery(works);
-  createModalAddWorkForm();
   openAddpictureForm();
   createHrElement();
   createButonAddPicture();
@@ -55,7 +55,7 @@ export const openModal = async () => {
   const modalContainer = document.querySelector(".modal__container");
   const modalTitle = document.getElementById("modalTitle");
   const addWork = document.getElementById("addWork");
-  const inputTitle = document.getElementById("inputTitle")
+  const inputTitle = document.getElementById("inputTitle");
  
 
   document.body.classList.add("modal-open");

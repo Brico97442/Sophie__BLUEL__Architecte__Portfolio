@@ -147,7 +147,7 @@ export const createInputTitle = () => {
   });
 };
 
-export const createLabelSelect = async () => {
+export const createInputSelect = async () => {
   const labelSelect = document.createElement("label");
   labelSelect.id = "labelSelect";
   labelSelect.innerText = "Catégorie";
