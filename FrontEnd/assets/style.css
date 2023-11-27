@@ -631,7 +631,10 @@ input[type="submit"] {
 }
 
 footer {
-	/* height: 60px; */
+	max-width: 1440px;
+	position: absolute;
+	bottom: 0;
+	width : 100% ;
 	background-color:#FFFFFF;
 	padding: 2em;
 }
