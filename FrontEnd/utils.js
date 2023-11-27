@@ -260,5 +260,6 @@ const checkFormValidity = () => {
     btnValid.classList.remove("btn__valid--checked");
     btnValid.classList.add("btn__valid--unchecked");
     btnValid.setAttribute("disabled", "true");
+    
   }
 };
