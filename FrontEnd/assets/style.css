@@ -67,7 +67,6 @@ body {
 }
 
 
-
 header {
 	position: relative;
 	display: flex;
@@ -125,8 +124,8 @@ nav a {
 }
 
 nav li {
-	padding: 0 10px;
-	font-size: 1.2em;
+	padding: 0 23px;
+	font-size: 16px;
 }
 
 li:hover {
@@ -632,15 +631,24 @@ input[type="submit"] {
 
 footer {
 	max-width: 1440px;
-	position: absolute;
 	bottom: 0;
 	width : 100% ;
 	background-color:#FFFFFF;
 	padding: 2em;
 }
 
+#footerLoginPage {
+	position: absolute;
+}
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
+	padding-right: 79px;
+	font-size: 14px;
+}
+
+footer li {
+	font-size: 14px;	
 }
