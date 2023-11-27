@@ -251,10 +251,7 @@ const checkFormValidity = () => {
   const isCategorySelected = !!inputCategories.value;
 
   const btnValid = document.getElementById("btnValid");
-  console.log(ImageSelected);
-  console.log(TitleFilled);
-  console.log(isCategorySelected);
-
+  
   if (ImageSelected && TitleFilled && isCategorySelected) {
     btnValid.classList.remove("btn__valid--unchecked");
     btnValid.classList.add("btn__valid--checked");

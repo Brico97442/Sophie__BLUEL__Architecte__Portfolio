@@ -11,7 +11,6 @@ const postLogin = async () => {
   const response = await fetch("http://localhost:5678/api/users/login", {
     method: "POST",
     headers: {
-      accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -54,11 +53,13 @@ export const displayAdminPanel = () => {
   createEditionIcon();
 
   const createEditButton = () => {
-    const portfolio = document.getElementById("portfolio");
+    // const portfolio = document.getElementById("portfolio");
     const editBtn = document.createElement("button");
     editBtn.id = "editBtn";
+    const h2 = document.getElementById("h2Portfolio")
+    h2.appendChild(editBtn);
 
-    portfolio.appendChild(editBtn);
+    // portfolio.appendChild(editBtn);
     const editIconBtn = document.createElement("i");
     const editTextBtn = document.createElement("p");
     editTextBtn.innerHTML = "Modifier";
