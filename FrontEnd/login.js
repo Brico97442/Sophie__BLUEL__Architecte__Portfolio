@@ -47,7 +47,7 @@ export const displayAdminPanel = () => {
     userBanner.appendChild(icon);
     userBanner.appendChild(textIcon);
     const filters = document.getElementById("filters");
-    body.style.marginTop = "97px";
+    body.style.marginTop = "60px";
     filters.style.visibility = "hidden";
   };
   createEditionIcon();
