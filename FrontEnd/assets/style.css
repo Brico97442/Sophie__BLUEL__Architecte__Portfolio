@@ -71,10 +71,9 @@ header {
 	position: relative;
 	display: flex;
 	justify-content: space-between;
-	width: 1140px;
+	max-width: 1140px;
 	margin: 50px 0;
 	width: 100%;
-	
 }
 
 header a {
@@ -177,7 +176,6 @@ li:hover {
 }
 
 #portfolio {
-
 	background-color: #FFFEF8;
 }
 
