@@ -19,7 +19,7 @@ export const displayWorks = async (worksToDisplay) => {
   for (let i = 0; i < worksToDisplay.length; i++) {
     const picturesElement = document.createElement("figure");
     const img = document.createElement("img");
-    img.id = "work__img";
+    img.id = "workImg";
     const figCaption = document.createElement("figcaption");
 
     img.src = worksToDisplay[i].imageUrl;
@@ -35,7 +35,7 @@ export const displayWorks = async (worksToDisplay) => {
 export const updateDisplay = async (categoryId) => {
   const works = await getWorks();
   const worksToDisplay = categoryId
-    ? works.filter((picture) => picture.categoryId === categoryId)
+    ? works.filter((work) => work.categoryId === categoryId)
     : works;
   displayWorks(worksToDisplay);
 };
@@ -229,10 +229,11 @@ export const postWork = async () => {
       modalGallery.classList.remove("hidden");
       modalGallery.classList.add("grid");
 
-      const updatedWorks = await getWorks();
+      const works = await getWorks();
 
-      await displayWorks(updatedWorks);
-      await displayModalWorks(updatedWorks);
+      await displayWorks(works);
+      await displayModalWorks(works);
+      
     } else {
       console.error("Échec de l'ajout du travail.");
     }
