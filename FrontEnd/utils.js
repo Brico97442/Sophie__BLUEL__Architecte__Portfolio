@@ -147,6 +147,11 @@ export const createInputTitle = () => {
   });
 };
 
+export const getStoredCategories = () => {
+  const storedCategories = localStorage.getItem("categories");
+  return storedCategories ? JSON.parse(storedCategories) : [];
+};
+
 export const createInputSelect = async () => {
   const labelSelect = document.createElement("label");
   labelSelect.id = "labelSelect";
@@ -155,13 +160,13 @@ export const createInputSelect = async () => {
   const inputCategories = document.createElement("select");
   inputCategories.id = "inputCategories";
 
-  // Récupérer les catégories via la fonction getCategories
-  const categories = await getCategories(); // Attendre la résolution de la promesse
-  categories.shift({ name: "Tous", categoryId: null });
+  // Récupérer les catégories stockées via la fonction getStoredCategories
+  const storedCategories = getStoredCategories();
+  storedCategories.shift({ name: "Tous"});
   inputCategories.innerHTML = "";
   inputCategories.add(new Option(""));
 
-  categories.forEach((category) => {
+  storedCategories.forEach((category) => {
     inputCategories.add(new Option(category.name, category.id));
   });
 
@@ -171,8 +176,8 @@ export const createInputSelect = async () => {
   inputCategories.addEventListener("change", () => {
     checkFormValidity();
   });
-  
 };
+
 
 export const postWork = async () => {
   const addWork = document.getElementById("addWork");

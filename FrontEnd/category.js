@@ -4,7 +4,7 @@ import { updateDisplay } from "./utils.js";
 export const getCategories = async () => {
   const categoriesApi = await fetch("http://localhost:5678/api/categories");
   const categories = await categoriesApi.json();
-  categories.unshift({ name: "Tous", categoryId: null });
+  categories.unshift({ name: "Tous", Id: null });
   return categories;
 };
 
@@ -48,3 +48,5 @@ export const displayCategories = async (categories) => {
     });
   }
 };
+
+
