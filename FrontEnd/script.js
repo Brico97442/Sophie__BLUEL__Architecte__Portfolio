@@ -1,6 +1,6 @@
 import { displayCategories, getCategories } from "./category.js";
 
-import { getWorks, displayWorks, getStoredCategories, } from "./utils.js";
+import { getWorks, displayWorks, getStoredCategories, cachedWorks, } from "./utils.js";
 
 import { displayAdminPanel } from "./login.js";
 
@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const storedCategories = getStoredCategories();
   displayCategories(storedCategories);
 
-  const works = await getWorks();
-  displayWorks(works);
+  await getWorks();
+  displayWorks(cachedWorks);
 
   const editBtn = document.getElementById("editBtn");
   editBtn.addEventListener("click", () => {

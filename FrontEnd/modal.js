@@ -6,6 +6,7 @@ import {
   createInputSelect,
   postWork,
   previewImg,
+  cachedWorks,
 } from "./utils.js";
 
 import {
@@ -35,11 +36,10 @@ const openAddpictureForm = () => {
 };
 
 export const openModal = async () => {
-  const works = await getWorks();
   createModalContainer();
   createModal();
   createModalTitle();
-  createModalGallery(works);
+  createModalGallery(cachedWorks);
   openAddpictureForm();
   createHrElement();
   createButonAddPicture();

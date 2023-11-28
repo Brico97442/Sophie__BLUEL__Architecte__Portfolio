@@ -5,11 +5,18 @@ import { createButonTrash } from "./modalLayers.js";
 let inputTitleValue;
 let inputImgValue;
 
+export let cachedWorks = [];
 export const getWorks = async () => {
   const worksApi = await fetch("http://localhost:5678/api/works");
   const works = await worksApi.json();
+
+  cachedWorks = works;
   return works;
 };
+
+export const removeWork = (work) => {
+  cachedWorks = cachedWorks.filter(element => element !== work);
+}
 
 // Fonction pour afficher les œuvres dans la galerie
 const galleryElement = document.querySelector(".gallery");
@@ -69,7 +76,7 @@ export const displayModalWorks = async (worksToDisplay) => {
 
     deleteBtn.addEventListener("click", async (event) => {
       event.preventDefault();
-
+      removeWork(worksToDisplay[i]);
       const userToken = localStorage.getItem("userToken");
       if (userToken) {
         const responseDelete = await fetch(
@@ -85,8 +92,8 @@ export const displayModalWorks = async (worksToDisplay) => {
 
         if (responseDelete.ok) {
           picturesElement.remove();
-          const works = await getWorks();
-          displayWorks(works);
+          displayWorks(cachedWorks);
+          
         } else {
           console.error("Échec de la suppression du travail.");
         }
@@ -234,8 +241,10 @@ export const postWork = async () => {
 
       modalGallery.classList.remove("hidden");
       modalGallery.classList.add("grid");
-
-      const works = await getWorks();
+      
+      const newWork = await responseAddwork.json();
+      cachedWorks.push(newWork);
+      const works = cachedWorks;
 
       await displayWorks(works);
       await displayModalWorks(works);
