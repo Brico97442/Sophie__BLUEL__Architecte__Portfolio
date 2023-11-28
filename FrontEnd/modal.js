@@ -21,7 +21,6 @@ import {
   createModalAddWorkForm,
   createButtonAddPictureLabel,
   createPreviewZoneImg,
-  
 } from "./modalLayers.js";
 
 const openAddpictureForm = () => {
@@ -56,7 +55,6 @@ export const openModal = async () => {
   const modalTitle = document.getElementById("modalTitle");
   const addWork = document.getElementById("addWork");
   const inputTitle = document.getElementById("inputTitle");
- 
 
   document.body.classList.add("modal-open");
 
@@ -71,7 +69,6 @@ export const openModal = async () => {
 
       const returnBtn = document.querySelector(".btn__return");
       returnBtn.classList.remove("hidden");
-
 
       btnValid.classList.add("flex");
       btnValid.classList.remove("btn__valid--checked");
@@ -104,11 +101,10 @@ export const openModal = async () => {
     btnValid.classList.add("hidden");
     modalTitle.innerText = "Galerie photo";
 
+    const inputCategories = document.getElementById("inputCategories");
 
-    const inputCategories = document.getElementById("inputCategories")
-    
     addWork.value = "";
-    inputTitle.value = ""; 
+    inputTitle.value = "";
     inputCategories.selectedIndex = -1;
 
     preview.classList.add("hidden");
@@ -128,7 +124,6 @@ export const openModal = async () => {
     btnValid.classList.add("hidden");
   });
 
-  
   if (addWork) {
     addWork.addEventListener("change", () => {
       previewImg();

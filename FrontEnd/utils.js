@@ -171,6 +171,7 @@ export const createInputSelect = async () => {
   inputCategories.addEventListener("change", () => {
     checkFormValidity();
   });
+  
 };
 
 export const postWork = async () => {
@@ -256,10 +257,10 @@ const checkFormValidity = () => {
     btnValid.classList.remove("btn__valid--unchecked");
     btnValid.classList.add("btn__valid--checked");
     btnValid.removeAttribute("disabled");
+    
   } else {
     btnValid.classList.remove("btn__valid--checked");
     btnValid.classList.add("btn__valid--unchecked");
     btnValid.setAttribute("disabled", "true");
-    
   }
 };
